@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import { AppComponent } from './app.component'; // 5 - el cual se importa acá
 
 @NgModule({
   declarations: [
@@ -11,6 +11,6 @@ import { AppComponent } from './app.component';
     BrowserModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent] // 4 - Indica que debe tener cargado app.component.ts
 })
 export class AppModule { }
