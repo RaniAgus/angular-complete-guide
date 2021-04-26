@@ -1,5 +1,8 @@
 <label>Server Name</label>
+<!-- No nos conviene acá porque no se actualiza automáticamente (solamente actualiza en una dirección)
 <input type="text" class="form-control" (input)="onUpdateServerName($event)">
+-->
+<input type="text" class="form-control" [(ngModel)]="serverName">
 <button class="btn btn-primary" [disabled]="!allowNewServer" (click)="onCreateServer()" >Add Server</button>
 <hr>
 <p>{{ serverCreationStatus }}</p>
