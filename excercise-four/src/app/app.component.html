@@ -26,10 +26,10 @@
     <div class="col-md-6">
       <div class="list-group">
         <div 
-          *ngFor="let element of log" 
+          *ngFor="let element of log; let i = index" 
           class="list-group-item"
-          [ngStyle]="{'color': getColor(element) }"
-          [ngClass]="{'blue': element >= 5 }"
+          [ngStyle]="{'color': getColor(i) }"
+          [ngClass]="{'blue': i >= 4 }"
         >
           You clicked again! {{ element }}
         </div>

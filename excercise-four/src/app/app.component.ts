@@ -7,14 +7,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   showParagraph:boolean = false;
-  log:number[] = [];
+  log:Date[] = [];
 
   onToggleDetails():void {
     this.showParagraph = !this.showParagraph;
-    this.log.push(this.log.length + 1);
+    // this.log.push(this.log.length + 1);
+    this.log.push(new Date());
   }
 
   getColor(element: number) {
-    return element < 5 ? '#333' : 'white';
+    return element < 4 ? '#333' : 'white';
   }
 }
