@@ -6,5 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'excercise-four';
+  displayParagraph:boolean = false;
+  clicks:number[] = [];
+
+  onClick():void {
+    this.displayParagraph = !this.displayParagraph;
+    this.clicks.push(this.clicks.length + 1);
+  }
+
+  getColor(num: number) {
+    return num < 5 ? '#333' : 'white';
+  }
 }
