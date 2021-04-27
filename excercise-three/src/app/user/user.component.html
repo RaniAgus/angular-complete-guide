@@ -1,15 +1,20 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <input type="text" class="form-control" [(ngModel)]="username">
-        </div>
-        <div class="col-md-4">
-            <button class="btn btn-primary" [disabled]="username==''" (click)="onClick()">Submit</button>
+            <label>Username</label>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <p>{{ username }}</p>
+            <input type="text" class="form-control" [(ngModel)]="username">
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-primary" [disabled]="!username" (click)="onClick()">Reset User</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <p>Your username is: {{ username }}</p>
         </div>
     </div>
 </div>
