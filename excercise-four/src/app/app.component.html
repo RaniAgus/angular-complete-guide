@@ -18,20 +18,20 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-6">
-      <button type="button" class="btn btn-primary" (click)="onClick()">Display Details</button>
-      <div *ngIf="displayParagraph" class="well">
+      <button type="button" class="btn btn-primary" (click)="onToggleDetails()">Display Details</button>
+      <div *ngIf="showParagraph" class="well">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
       </div>
     </div>
     <div class="col-md-6">
       <div class="list-group">
         <div 
-          *ngFor="let click of clicks" 
+          *ngFor="let element of log" 
           class="list-group-item"
-          [ngStyle]="{'color': getColor(click) }"
-          [ngClass]="{ 'blue': click >= 5 }"
+          [ngStyle]="{'color': getColor(element) }"
+          [ngClass]="{'blue': element >= 5 }"
         >
-          You clicked again! {{ click }}
+          You clicked again! {{ element }}
         </div>
       </div>
     </div>

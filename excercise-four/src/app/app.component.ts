@@ -6,15 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  displayParagraph:boolean = false;
-  clicks:number[] = [];
+  showParagraph:boolean = false;
+  log:number[] = [];
 
-  onClick():void {
-    this.displayParagraph = !this.displayParagraph;
-    this.clicks.push(this.clicks.length + 1);
+  onToggleDetails():void {
+    this.showParagraph = !this.showParagraph;
+    this.log.push(this.log.length + 1);
   }
 
-  getColor(num: number) {
-    return num < 5 ? '#333' : 'white';
+  getColor(element: number) {
+    return element < 5 ? '#333' : 'white';
   }
 }
