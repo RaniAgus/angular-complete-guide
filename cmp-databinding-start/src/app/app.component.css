@@ -5,3 +5,5 @@
 p {
   color: blue;
 }
+
+/* ¡¡¡Angular encapsula los estilos!!! Por lo tanto, esto NO se aplica a los demás componentes. */
