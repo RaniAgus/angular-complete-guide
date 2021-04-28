@@ -4,13 +4,13 @@
       <label>Server Name</label>
       <input type="text" class="form-control" #serverNameInput> <!-- estas referencias se pueden usar SOLO EN EL TEMPLATE-->
       <label>Server Content</label>
-      <input type="text" class="form-control" #serverDescriptionInput>
+      <input type="text" class="form-control" #serverContentInput>
       <br>
       <button
         class="btn btn-primary"
-        (click)="onAddServer(serverNameInput, serverDescriptionInput)">Add Server</button>
+        (click)="onAddServer(serverNameInput)">Add Server</button>
       <button
         class="btn btn-primary"
-        (click)="onAddBlueprint(serverNameInput, serverDescriptionInput)">Add Server Blueprint</button>
+        (click)="onAddBlueprint(serverNameInput)">Add Server Blueprint</button>
     </div>
   </div>
