@@ -31,5 +31,9 @@ export class AppComponent {
       name: blueprintData.newServerName,
       content: blueprintData.newServerContent
     });
+  }  
+
+  onChangeFirst() {
+    this.serverElements[0].name = 'Changed!'; // Se puede cambiar desde varios sitios
   }
 }

@@ -9,6 +9,9 @@ export class ServerElementComponent implements OnInit, OnChanges { // Es una bue
   @Input('srvElement') // Para definirlo como alias para esta propiedad desde fuera
   element: {type: string, name: string, content: string};
 
+  @Input()
+  name: string;
+
   constructor() {
     console.log('constructor called!');
   }
@@ -17,8 +20,10 @@ export class ServerElementComponent implements OnInit, OnChanges { // Es una bue
     console.log('ngOnInit called!');
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges):void {
     console.log('ngOnChanges called!');
+    console.log(changes);
   }
+
 
 }
