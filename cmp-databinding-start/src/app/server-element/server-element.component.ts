@@ -9,6 +9,8 @@ import { Component
        , AfterViewInit
        , AfterViewChecked
        , OnDestroy
+       , ViewChild
+       , ElementRef
        } from '@angular/core';
 
 @Component({
@@ -24,12 +26,15 @@ export class ServerElementComponent implements OnInit // Es una buena práctica 
                                              , AfterViewInit
                                              , AfterViewChecked
                                              , OnDestroy
-  {
+{
   @Input('srvElement') // Para definirlo como alias para esta propiedad desde fuera
   element: {type: string, name: string, content: string};
 
   @Input()
   name: string;
+
+  @ViewChild('heading', { static: true })
+  header: ElementRef;
 
   constructor() {
     console.log('constructor called!');
@@ -37,6 +42,7 @@ export class ServerElementComponent implements OnInit // Es una buena práctica 
 
   ngOnInit(): void {
     console.log('ngOnInit called!');
+    console.log(`Text content: ${this.header.nativeElement.textContent}`); // Acá 'testserver' no aparece
   }
 
   ngOnChanges(changes: SimpleChanges):void {
@@ -50,6 +56,7 @@ export class ServerElementComponent implements OnInit // Es una buena práctica 
 
   ngAfterContentInit() {
     console.log('ngAfterContentInit called!'); // Después de onInit y de doCheck, solo una vez
+    console.log(`Text content: ${this.header.nativeElement.textContent}`); // Acá tampoco aparece 'testserver'
   }
 
   ngAfterContentChecked() {
@@ -58,6 +65,7 @@ export class ServerElementComponent implements OnInit // Es una buena práctica 
 
   ngAfterViewInit() {
     console.log('ngAfterViewInit called!'); // Después de ContentInit
+    console.log(`Text content: ${this.header.nativeElement.textContent}`); // Acá sí se renderizó 'testserver'
   }
 
   ngAfterViewChecked() {
