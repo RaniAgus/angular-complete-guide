@@ -7,7 +7,8 @@ import { Component
        , AfterContentInit
        , AfterContentChecked
        , AfterViewInit
-       , AfterViewChecked 
+       , AfterViewChecked
+       , OnDestroy
        } from '@angular/core';
 
 @Component({
@@ -22,6 +23,7 @@ export class ServerElementComponent implements OnInit // Es una buena práctica 
                                              , AfterContentChecked
                                              , AfterViewInit
                                              , AfterViewChecked
+                                             , OnDestroy
   {
   @Input('srvElement') // Para definirlo como alias para esta propiedad desde fuera
   element: {type: string, name: string, content: string};
@@ -60,5 +62,9 @@ export class ServerElementComponent implements OnInit // Es una buena práctica 
 
   ngAfterViewChecked() {
     console.log('ngAfterViewChecked called!'); // Después de ContentCheck
+  }
+
+  ngOnDestroy() {
+    console.log('ngOnDestroy was called!');
   }
 }

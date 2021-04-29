@@ -36,4 +36,8 @@ export class AppComponent {
   onChangeFirst() {
     this.serverElements[0].name = 'Changed!'; // Se puede cambiar desde varios sitios
   }
+
+  onDestroyFirst() {
+    this.serverElements.splice(0, 1);
+  }
 }
