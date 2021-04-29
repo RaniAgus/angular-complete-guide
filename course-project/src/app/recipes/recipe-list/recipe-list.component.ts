@@ -13,11 +13,11 @@ export class RecipeListComponent implements OnInit {
     [
       { name: 'A test recipe'
       , description: 'This is simply a test'
-      , imagePath: 'https://via.placeholder.com/150'
+      , imagePath: 'https://via.placeholder.com/300'
       }
     , { name: 'Yet another test recipe'
       , description: 'This is another test'
-      , imagePath: 'https://via.placeholder.com/150'
+      , imagePath: 'https://via.placeholder.com/300'
       }
     ]
   ;
