@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'excercise-five';
+  evenList: number[] = [];
+  oddList: number[] = [];
+
+  onNumberEmitted(number: number) {
+    if(number % 2) {
+      this.oddList.push(number);
+    } else {
+      this.evenList.push(number);
+    }
+  }
 }

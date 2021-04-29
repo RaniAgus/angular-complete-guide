@@ -1,1 +1,23 @@
-<p>game-control works!</p>
+<div class="row">
+    <div class="col-md-6">
+        <button 
+            *ngIf="!ref"
+            type="button" 
+            class="btn btn-success" 
+            (click)="onStart()"
+        >
+            Start
+        </button>
+        <button 
+            *ngIf="ref"
+            type="button" 
+            class="btn btn-danger" 
+            (click)="onStop()"
+        >
+            Stop
+        </button>
+    </div>
+    <div class="col-md-6">
+        {{ num }}
+    </div>
+</div>
