@@ -11,6 +11,7 @@ import { Component
        , OnDestroy
        , ViewChild
        , ElementRef
+       , ContentChild
        } from '@angular/core';
 
 @Component({
@@ -36,6 +37,9 @@ export class ServerElementComponent implements OnInit // Es una buena práctica 
   @ViewChild('heading', { static: true })
   header: ElementRef;
 
+  @ContentChild('contentParagraph', { static: true })
+  paragraph: ElementRef;
+
   constructor() {
     console.log('constructor called!');
   }
@@ -43,6 +47,7 @@ export class ServerElementComponent implements OnInit // Es una buena práctica 
   ngOnInit(): void {
     console.log('ngOnInit called!');
     console.log(`Text content: ${this.header.nativeElement.textContent}`); // Acá 'testserver' no aparece
+    console.log(`Text content of paragraph: ${this.paragraph.nativeElement.textContent}`); // 'Just a test!' tampoco aparece
   }
 
   ngOnChanges(changes: SimpleChanges):void {
@@ -56,7 +61,7 @@ export class ServerElementComponent implements OnInit // Es una buena práctica 
 
   ngAfterContentInit() {
     console.log('ngAfterContentInit called!'); // Después de onInit y de doCheck, solo una vez
-    console.log(`Text content: ${this.header.nativeElement.textContent}`); // Acá tampoco aparece 'testserver'
+    console.log(`Text content of paragraph: ${this.paragraph.nativeElement.textContent}`); // Acá sí se renderizó 'Just a test!'
   }
 
   ngAfterContentChecked() {
