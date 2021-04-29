@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
   }
 )
 export class AppComponent {
-  title = 'course-project';
+  recipes: boolean = true;
+  shoppingList: boolean = false;
 }

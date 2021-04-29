@@ -1,9 +1,12 @@
-<app-header></app-header>
+<app-header 
+  (recipesToggled)="recipes = true; shoppingList = false" 
+  (shoppingListToggled)="shoppingList = true; recipes = false"
+></app-header>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <app-recipes></app-recipes>
-      <app-shopping-list></app-shopping-list>
+      <app-recipes *ngIf="recipes"></app-recipes>
+      <app-shopping-list *ngIf="shoppingList"></app-shopping-list>
     </div>
   </div>
 </div>
