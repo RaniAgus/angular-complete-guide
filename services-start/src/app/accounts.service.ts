@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { LoggingService } from './logging.service';
 
 @Injectable() // Se agrega en el servicio donde quiero inyectar, no en el inyectado (?)
@@ -17,6 +17,8 @@ export class AccountsService {
           status: 'unknown'
         }
       ];
+    
+    statusUpdated: EventEmitter<string> = new EventEmitter<string>();
 
     constructor(private loggingService: LoggingService) {}
     
