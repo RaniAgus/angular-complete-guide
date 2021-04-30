@@ -6,7 +6,7 @@ import { Directive, Renderer2 } from '@angular/core';
   selector: '[appBetterHighlight]'
 })
 export class BetterHighlightDirective implements OnInit {
-  @Input()
+  @Input('appBetterHighlight')
   defaultColor: string = 'transparent';
   @Input()
   highlightColor: string = 'lightyellow';
