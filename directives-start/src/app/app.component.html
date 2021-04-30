@@ -6,15 +6,27 @@
         (click)="onlyOdd = !onlyOdd">Only show odd numbers</button>
       <br><br>
       <ul class="list-group">
+        <!--
         <div *ngFor="let number of numbers">
           <li class="list-group-item" *ngIf="onlyOdd && (number % 2 == 1)">{{ number }}</li>
           <li class="list-group-item" *ngIf="!onlyOdd && (number % 2 == 0)">{{ number }}</li>
-          <!-- El asterisco en *ngIf/*ngFor indica que es un ng-template que dentro contiene un div y luego la etiqueta -->
+          
           <ng-template [ngIf]="!onlyOdd && (number % 2 == 0)">
             <div>
               <li class="list-group-item">{{ number }}</li>
             </div>
           </ng-template>
+        </div>
+        -->
+        <div *ngIf="onlyOdd"> <!-- El asterisco en *ngIf/*ngFor indica que es un ng-template que dentro contiene un div y luego la etiqueta -->
+          <div *ngFor="let number of numbers">
+            <li *ngIf="number % 2" class="list-group-item">{{ number }}</li>
+          </div>
+        </div>
+        <div *appUnless="onlyOdd"> <!-- Debe llamarse sí o sí igual que la propiedad a la que estaríamos bindeando -->
+          <div *ngFor="let number of numbers">
+            <li *appUnless="number % 2" class="list-group-item">{{ number }}</li>
+          </div>
         </div>
       </ul>
       <p appBasicHighlight>Yo tengo estilo</p>
