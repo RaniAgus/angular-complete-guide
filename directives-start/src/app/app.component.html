@@ -32,6 +32,12 @@
       <p appBasicHighlight>Yo tengo estilo</p>
       <p [appBetterHighlight]="'lightgreen'">Y yo tengo uno mejor</p>
       <p appBetterHighlight="lightgreen">Soy igual al de arriba</p>
+      <div [ngSwitch]="value">
+        <p *ngSwitchCase="5">Value is 5</p>
+        <p *ngSwitchCase="10">Value is 10</p>
+        <p *ngSwitchCase="100">Value is 100</p>
+        <p *ngSwitchDefault>Value is other than 5, 10 or 100</p>
+      </div>
     </div>
   </div>
 </div>
