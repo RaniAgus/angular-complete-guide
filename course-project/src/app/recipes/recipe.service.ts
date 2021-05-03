@@ -1,18 +1,26 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { Ingredient } from '../shared/ingredient.model';
 import { Recipe } from './recipe.model'
 
 @Injectable({providedIn: 'root'})
 export class RecipeService {
   private recipes:Recipe[] = 
-    [
-      { name: 'A test recipe'
-      , description: 'This is simply a test'
-      , imagePath: 'https://via.placeholder.com/300'
-      }
-    , { name: 'Yet another test recipe'
-      , description: 'This is another test'
-      , imagePath: 'https://via.placeholder.com/300'
-      }
+    [ new Recipe
+      ( 'Milanesa con papas'
+      , 'This is simply a test'
+      , 'https://via.placeholder.com/300'
+      , [ new Ingredient('Meat', 1)
+        , new Ingredient('French Fries', 20)
+        ]
+      )
+    , new Recipe
+      ( 'Hamburguesa'
+      , 'This is another test'
+      , 'https://via.placeholder.com/300'
+      , [ new Ingredient('Buns', 2)
+        , new Ingredient('Meat', 1)
+        ]
+      )
     ]
   ;
 
