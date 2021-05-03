@@ -3,7 +3,7 @@ import { Recipe } from './recipe.model'
 
 @Injectable({providedIn: 'root'})
 export class RecipeService {
-  recipes:Recipe[] = 
+  private recipes:Recipe[] = 
     [
       { name: 'A test recipe'
       , description: 'This is simply a test'
@@ -17,6 +17,10 @@ export class RecipeService {
   ;
 
   recipeSelected: EventEmitter<Recipe> = new EventEmitter<Recipe>();
+
+  getRecipes() {
+    return this.recipes.slice();
+  }
 
   selectRecipe(recipe: Recipe) {
     this.recipeSelected.emit(recipe);
