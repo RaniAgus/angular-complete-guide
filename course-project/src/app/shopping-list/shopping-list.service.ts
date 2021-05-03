@@ -19,4 +19,9 @@ export class ShoppingListService {
     this.ingredients.push(ingredient);
     this.ingredientsModified.emit(this.ingredients.slice());
   }
+
+  addIngredients(ingredients: Ingredient[]) {
+    this.ingredients.push(...ingredients); // Esto convierte el array en una lista de parámetros
+    this.ingredientsModified.emit(this.ingredients.slice());
+  }
 }
