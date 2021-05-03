@@ -11,22 +11,32 @@ import { UserComponent } from './users/user/user.component';
 import { EditServerComponent } from './servers/edit-server/edit-server.component';
 import { ServerComponent } from './servers/server/server.component';
 import { ServersService } from './servers/servers.service';
+import { RouterModule, Routes } from '@angular/router';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    UsersComponent,
-    ServersComponent,
-    UserComponent,
-    EditServerComponent,
-    ServerComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-  ],
-  providers: [ServersService],
-  bootstrap: [AppComponent]
-})
+const appRoutes: Routes = 
+  [ { path: '', component: HomeComponent }
+  , { path: 'users' /* Sin el slash! */, component: UsersComponent } 
+  , { path: 'servers', component: ServersComponent }
+  ]
+;
+
+@NgModule
+( { declarations: 
+    [ AppComponent
+    , HomeComponent
+    , UsersComponent
+    , ServersComponent
+    , UserComponent
+    , EditServerComponent
+    , ServerComponent
+    ]
+  , imports:
+    [ BrowserModule
+    , FormsModule
+    , RouterModule.forRoot(appRoutes) // Esto agrega nuestras routes
+    ]
+  , providers: [ServersService]
+  , bootstrap: [AppComponent]
+  }
+)
 export class AppModule { }
