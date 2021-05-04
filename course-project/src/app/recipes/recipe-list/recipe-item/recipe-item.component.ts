@@ -13,13 +13,9 @@ import { RecipeService } from '../../recipe.service';
 export class RecipeItemComponent implements OnInit {
   @Input('recipeItem') recipe: Recipe;
 
-  constructor(private recipeService: RecipeService, private router: Router) { }
+  constructor() { }
 
   ngOnInit(): void {
-  }
-
-  onSelectedRecipe() {
-    this.router.navigate(['', 'recipes', this.recipe.id]);
   }
 
 }
