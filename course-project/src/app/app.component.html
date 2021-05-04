@@ -1,12 +1,8 @@
-<app-header 
-  (recipesToggled)="recipes = true; shoppingList = false" 
-  (shoppingListToggled)="shoppingList = true; recipes = false"
-></app-header>
+<app-header></app-header>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <app-recipes *ngIf="recipes"></app-recipes>
-      <app-shopping-list *ngIf="shoppingList"></app-shopping-list>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>
