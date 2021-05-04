@@ -13,7 +13,8 @@ import { DropdownDirective } from './shared/dropdown.directive';
 import { RouterModule, Routes } from '@angular/router';
 
 const appRoutes: Routes = 
-  [ { path: 'recipes', component: RecipesComponent }
+  [ { path: '', redirectTo: 'recipes', pathMatch: 'full' }
+  , { path: 'recipes', component: RecipesComponent }
   , { path: 'shopping-list', component: ShoppingListComponent }
   ]
 ;
