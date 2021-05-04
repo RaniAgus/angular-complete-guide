@@ -7,7 +7,8 @@ import { Recipe } from './recipe.model'
 export class RecipeService {
   private recipes:Recipe[] = 
     [ new Recipe
-      ( 'Milanesa con papas'
+      ( 1
+      , 'Milanesa con papas'
       , 'This is simply a test'
       , 'https://via.placeholder.com/300'
       , [ new Ingredient('Meat', 1)
@@ -15,7 +16,8 @@ export class RecipeService {
         ]
       )
     , new Recipe
-      ( 'Hamburguesa'
+      ( 2
+      , 'Hamburguesa'
       , 'This is another test'
       , 'https://via.placeholder.com/300'
       , [ new Ingredient('Buns', 2)
@@ -27,20 +29,12 @@ export class RecipeService {
 
   constructor(private shoppingListService: ShoppingListService) {}
 
-  selectedRecipeChanged: EventEmitter<Recipe> = new EventEmitter<Recipe>();
-  selectedRecipe: Recipe;
-
   getRecipes(): Recipe[] {
     return this.recipes.slice();
   }
 
-  getSelectedRecipe(): Recipe {
-    return this.selectedRecipe;
-  }
-
-  selectRecipe(recipe: Recipe): void {
-    this.selectedRecipe = recipe;
-    this.selectedRecipeChanged.emit();
+  getRecipeById(id: number): Recipe {
+    return this.recipes.find((recipe: Recipe) => recipe.id === id);
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
