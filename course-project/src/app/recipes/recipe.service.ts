@@ -27,14 +27,20 @@ export class RecipeService {
 
   constructor(private shoppingListService: ShoppingListService) {}
 
-  recipeSelected: EventEmitter<Recipe> = new EventEmitter<Recipe>();
+  selectedRecipeChanged: EventEmitter<Recipe> = new EventEmitter<Recipe>();
+  selectedRecipe: Recipe;
 
-  getRecipes() {
+  getRecipes(): Recipe[] {
     return this.recipes.slice();
   }
 
-  selectRecipe(recipe: Recipe) {
-    this.recipeSelected.emit(recipe);
+  getSelectedRecipe(): Recipe {
+    return this.selectedRecipe;
+  }
+
+  selectRecipe(recipe: Recipe): void {
+    this.selectedRecipe = recipe;
+    this.selectedRecipeChanged.emit();
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
