@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { RecipeDetailComponent } from "./recipes/recipe-detail/recipe-detail.component";
 import { RecipeEditComponent } from "./recipes/recipe-edit/recipe-edit.component";
+import { RecipeStartComponent } from "./recipes/recipe-start/recipe-start.component";
 import { RecipesComponent } from "./recipes/recipes.component";
 import { ShoppingListComponent } from "./shopping-list/shopping-list.component";
 
@@ -12,13 +13,14 @@ const appRoutes: Routes =
   , { path: 'recipes'
     , component: RecipesComponent 
     , children:
-      [ { path: 'detail', component: RecipeDetailComponent }
-      , { path: 'edit', component: RecipeEditComponent }
+      [ { path: ''      , component: RecipeStartComponent  }
+      , { path: 'detail', component: RecipeDetailComponent }
+      , { path: 'edit'  , component: RecipeEditComponent   }
       ]
     }
   , { path: 'shopping-list', component: ShoppingListComponent }
-  , { path: '404', component: NotFoundComponent }
-  , { path: '**', redirectTo: '/404' }
+  , { path: '404'          , component: NotFoundComponent     }
+  , { path: '**'           , redirectTo: '/404'               }
   ]
 ;
 

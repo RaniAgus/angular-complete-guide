@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -15,6 +14,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 
 import { DropdownDirective } from './shared/dropdown.directive';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
+import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 
 @NgModule
 (
@@ -29,6 +29,7 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
       , ShoppingListComponent
       , ShoppingEditComponent
       , NotFoundComponent
+      , RecipeStartComponent
       , DropdownDirective
       ]
   , imports: 
