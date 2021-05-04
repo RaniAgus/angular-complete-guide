@@ -14,15 +14,7 @@ import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-ed
 import { NotFoundComponent } from './not-found/not-found.component';
 
 import { DropdownDirective } from './shared/dropdown.directive';
-
-const appRoutes: Routes = 
-  [ { path: '', redirectTo: 'recipes', pathMatch: 'full' }
-  , { path: 'recipes', component: RecipesComponent }
-  , { path: 'shopping-list', component: ShoppingListComponent }
-  , { path: '404', component: NotFoundComponent }
-  , { path: '**', redirectTo: '404' }
-  ]
-;
+import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 
 @NgModule
 (
@@ -33,6 +25,7 @@ const appRoutes: Routes =
       , RecipeListComponent
       , RecipeDetailComponent
       , RecipeItemComponent
+      , RecipeEditComponent
       , ShoppingListComponent
       , ShoppingEditComponent
       , NotFoundComponent
