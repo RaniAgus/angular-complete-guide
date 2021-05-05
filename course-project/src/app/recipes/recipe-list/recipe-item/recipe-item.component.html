@@ -1,4 +1,9 @@
-<a [routerLink]="['', 'recipes', this.recipe.id]" style="cursor: pointer;" class="list-group-item clearfix"> <!-- clearfix es para que ocupe todo el ancho -->
+<a 
+    [routerLink]="['', 'recipes', this.recipe.id]" 
+    routerLinkActive="active"
+    style="cursor: pointer;" 
+    class="list-group-item clearfix" 
+> <!-- clearfix es para que ocupe todo el ancho -->
     <div class="pull-left"> <!-- en bootstrap 4, se llama float-left -->
         <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
         <p class="list-group-item-text">{{ recipe.description }}</p>
