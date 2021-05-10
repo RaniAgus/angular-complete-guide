@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Recipe } from './recipe.model'
@@ -7,8 +8,7 @@ import { Recipe } from './recipe.model'
 export class RecipeService {
   private recipes:Recipe[] = 
     [ new Recipe
-      ( 1
-      , 'Milanesa con papas'
+      ( 'Milanesa con papas'
       , 'This is simply a test'
       , 'https://via.placeholder.com/300'
       , [ new Ingredient('Meat', 1)
@@ -16,8 +16,7 @@ export class RecipeService {
         ]
       )
     , new Recipe
-      ( 2
-      , 'Hamburguesa'
+      ( 'Hamburguesa'
       , 'This is another test'
       , 'https://via.placeholder.com/300'
       , [ new Ingredient('Buns', 2)
@@ -27,6 +26,8 @@ export class RecipeService {
     ]
   ;
 
+  private recipesSubject: Subject<void> = new Subject<void>();
+
   constructor(private shoppingListService: ShoppingListService) {}
 
   getRecipes(): Recipe[] {
@@ -34,10 +35,24 @@ export class RecipeService {
   }
 
   getRecipeById(id: number): Recipe {
-    return this.recipes.find((recipe: Recipe) => recipe.id === id);
+    return this.recipes[id];
+  }
+
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipesSubject.next();
+  }
+
+  updateRecipe(index: number, newRecipe: Recipe) {
+    this.recipes[index] = newRecipe;
+    this.recipesSubject.next();
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.shoppingListService.addIngredients(ingredients); // No hacemos addIngredient porque estaría emitiendo muchos eventos
+  }
+
+  listenRecipesUpdate(fn) {
+    return this.recipesSubject.subscribe(fn);
   }
 }

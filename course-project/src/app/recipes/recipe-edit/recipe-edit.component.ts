@@ -13,6 +13,7 @@ import { RecipeService } from '../recipe.service';
 export class RecipeEditComponent implements OnInit {
   editMode: boolean = false;
 
+  index: number;
   recipe: Recipe;
   recipeForm: FormGroup;
 
@@ -23,7 +24,8 @@ export class RecipeEditComponent implements OnInit {
       (params: Params) => {
         if(params['id'] != null) {
           this.editMode = true;
-          this.recipe = this.recipeService.getRecipeById(+params['id']);
+          this.index = +params['id'];
+          this.recipe = this.recipeService.getRecipeById(this.index);
           this.initForm(); // Muy importante cargarlo aca para cuando se reinicie la pagina!
         }
       }
@@ -40,7 +42,12 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.recipeForm);
+    console.log(this.index, this.recipeForm.value)
+    if(this.editMode) {
+      this.recipeService.updateRecipe(this.index, this.recipeForm.value);
+    } else {
+      this.recipeService.addRecipe(this.recipeForm.value);
+    }
   }
 
   private initForm() {
