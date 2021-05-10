@@ -23,8 +23,8 @@ export class RecipeEditComponent implements OnInit {
         if(params['id'] != null) {
           this.editMode = true;
           this.index = +params['id'];
-          this.initForm(this.recipeService.getRecipeById(this.index)); // Muy importante cargarlo aca para cuando se reinicie la pagina!
         }
+        this.initForm(this.recipeService.getRecipeById(this.index)); // Muy importante cargarlo aca para cuando se reinicie la pagina!
       }
     );
   }
