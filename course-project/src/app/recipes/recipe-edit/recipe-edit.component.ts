@@ -34,6 +34,11 @@ export class RecipeEditComponent implements OnInit {
     return (this.recipeForm.get('ingredients') as FormArray).controls;
   }
 
+
+  onAddIngredient() {
+    (this.recipeForm.get('ingredients') as FormArray).push(this.ingredientToFormGroup('', ''))
+  }
+
   onSubmit() {
     console.log(this.recipeForm);
   }
@@ -43,24 +48,22 @@ export class RecipeEditComponent implements OnInit {
     ( { 'name': new FormControl(this.editMode ? this.recipe.name : '')
       , 'description': new FormControl(this.editMode ? this.recipe.description : '')
       , 'imagePath': new FormControl(this.editMode ? this.recipe.imagePath : '')
-      , 'ingredients': new FormArray(this.editMode ? this.getIngredientsForms() : [])
+      , 'ingredients': new FormArray(this.editMode ? this.ingredientsFormGroups : [])
       }
     );
   }
 
-  private getIngredientsForms() {
-    return this.recipe.ingredients.map
-      ( (ingredient: Ingredient) => {
-          return new FormGroup
-            ( { 'name': new FormControl(ingredient.name, Validators.required)
-              , 'amount': new FormControl(ingredient.amount, [Validators.required, Validators.pattern("[0-9]*[1-9][0-9]*")])
-              }
-            )
-          ;
+  private get ingredientsFormGroups() {
+    return this.recipe.ingredients.map( (ingredient: Ingredient) => this.ingredientToFormGroup(ingredient.name, ingredient.amount) );
+  }
+
+  private ingredientToFormGroup(name, amount) {
+    return new FormGroup
+      ( { 'name': new FormControl(name, Validators.required)
+        , 'amount': new FormControl(amount, [Validators.required, Validators.pattern("[0-9]*[1-9][0-9]*")])
         }
-      ) 
+      )
     ;
-    
   }
 
 }
