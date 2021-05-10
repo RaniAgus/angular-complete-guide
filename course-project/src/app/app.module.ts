@@ -16,6 +16,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
+import { RecipeService } from './recipes/recipe.service';
+import { ShoppingListService } from './shopping-list/shopping-list.service';
 
 @NgModule
 (
@@ -38,7 +40,7 @@ import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.compon
       , AppRoutingModule
       , ReactiveFormsModule
       ]
-  , providers: []
+  , providers: [RecipeService, ShoppingListService]
   , bootstrap: [AppComponent]
   }
 )
