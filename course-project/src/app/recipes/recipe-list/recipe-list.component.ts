@@ -12,16 +12,16 @@ import { RecipeService } from '../recipe.service';
 )
 export class RecipeListComponent implements OnInit {
   recipes: Recipe[] = [];
-  subscription: Subscription;
+  recipesChangedSub: Subscription;
 
   constructor(private recipeService: RecipeService) { }
 
   ngOnInit(): void {
     this.recipes = this.recipeService.getRecipes();
-    this.subscription = this.recipeService.listenRecipesUpdate( () => this.recipes = this.recipeService.getRecipes() );
+    this.recipesChangedSub = this.recipeService.listenRecipesChanges( () => this.recipes = this.recipeService.getRecipes() );
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.recipesChangedSub.unsubscribe();
   }
 }

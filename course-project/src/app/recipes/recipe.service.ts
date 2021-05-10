@@ -26,7 +26,7 @@ export class RecipeService {
     ]
   ;
 
-  private recipesSubject: Subject<void> = new Subject<void>();
+  private recipesChanged: Subject<void> = new Subject<void>();
 
   constructor(private shoppingListService: ShoppingListService) {}
 
@@ -40,19 +40,19 @@ export class RecipeService {
 
   addRecipe(recipe: Recipe) {
     this.recipes.push(recipe);
-    this.recipesSubject.next();
+    this.recipesChanged.next();
   }
 
   updateRecipe(index: number, newRecipe: Recipe) {
     this.recipes[index] = newRecipe;
-    this.recipesSubject.next();
+    this.recipesChanged.next();
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.shoppingListService.addIngredients(ingredients); // No hacemos addIngredient porque estaría emitiendo muchos eventos
   }
 
-  listenRecipesUpdate(fn) {
-    return this.recipesSubject.subscribe(fn);
+  listenRecipesChanges(fn) {
+    return this.recipesChanged.subscribe(fn);
   }
 }
