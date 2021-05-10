@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { Recipe } from '../recipe.model';
@@ -43,18 +43,24 @@ export class RecipeEditComponent implements OnInit {
     ( { 'name': new FormControl(this.editMode ? this.recipe.name : '')
       , 'description': new FormControl(this.editMode ? this.recipe.description : '')
       , 'imagePath': new FormControl(this.editMode ? this.recipe.imagePath : '')
-      , 'ingredients': new FormArray
-          ( this.editMode 
-              ? this.recipe.ingredients.map
-                  ( (ingredient: Ingredient) => new FormGroup
-                    ( { 'name': new FormControl(ingredient.name)
-                      , 'amount': new FormControl(ingredient.amount)
-                      }
-                    )
-                  ) 
-              : []
-          )
+      , 'ingredients': new FormArray(this.editMode ? this.getIngredientsForms() : [])
       }
     );
   }
+
+  private getIngredientsForms() {
+    return this.recipe.ingredients.map
+      ( (ingredient: Ingredient) => {
+          return new FormGroup
+            ( { 'name': new FormControl(ingredient.name, Validators.required)
+              , 'amount': new FormControl(ingredient.amount, [Validators.required, Validators.pattern("[0-9]*[1-9][0-9]*")])
+              }
+            )
+          ;
+        }
+      ) 
+    ;
+    
+  }
+
 }
