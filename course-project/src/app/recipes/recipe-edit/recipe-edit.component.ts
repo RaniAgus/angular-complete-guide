@@ -45,9 +45,9 @@ export class RecipeEditComponent implements OnInit {
 
   private initForm() {
     this.recipeForm = new FormGroup
-    ( { 'name': new FormControl(this.editMode ? this.recipe.name : '')
-      , 'description': new FormControl(this.editMode ? this.recipe.description : '')
-      , 'imagePath': new FormControl(this.editMode ? this.recipe.imagePath : '')
+    ( { 'name': new FormControl(this.editMode ? this.recipe.name : '', Validators.required)
+      , 'description': new FormControl(this.editMode ? this.recipe.description : '', Validators.required)
+      , 'imagePath': new FormControl(this.editMode ? this.recipe.imagePath : '', Validators.required)
       , 'ingredients': new FormArray(this.editMode ? this.ingredientsFormGroups : [])
       }
     );
