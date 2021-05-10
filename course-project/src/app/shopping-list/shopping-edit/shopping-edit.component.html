@@ -26,8 +26,7 @@
                     <button 
                         class="btn btn-danger"
                         type="button"
-                        [ngClass]="{'disabled': !isEditing }" 
-                        [disabled]="!isEditing"
+                        *ngIf="isEditing"
                         (click)="onDelete()"
                     >
                         Delete
