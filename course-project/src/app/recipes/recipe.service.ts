@@ -38,6 +38,11 @@ export class RecipeService {
     return this.recipes[id];
   }
 
+  removeRecipe(id: number) {
+    this.recipes.splice(id, 1);
+    this.recipesChanged.next();
+  }
+
   addRecipe(recipe: Recipe) {
     this.recipes.push(recipe);
     this.recipesChanged.next();

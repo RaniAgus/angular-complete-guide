@@ -13,6 +13,7 @@ import { RecipeService } from '../recipe.service';
   }
 )
 export class RecipeDetailComponent implements OnInit {
+  id: number;
   recipe:Recipe;
   recipeSubscription: Subscription;
 
@@ -20,13 +21,21 @@ export class RecipeDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.recipeSubscription = this.route.params.subscribe(
-      (params: Params) => this.recipe = this.recipeService.getRecipeById(+params['id'])
+      (params: Params) => { 
+        this.id = +params['id']; 
+        this.recipe = this.recipeService.getRecipeById(this.id) 
+      }
     );
   }
 
   onToShoppingList() {
     this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
     this.router.navigate(['', 'shopping-list']);
+  }
+
+  onDeleteRecipe() {
+    this.recipeService.removeRecipe(this.id);
+    this.router.navigate(['..']);
   }
 
   ngOnDestroy() {
