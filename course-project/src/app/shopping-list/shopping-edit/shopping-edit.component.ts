@@ -17,7 +17,7 @@ export class ShoppingEditComponent implements OnInit {
   ngOnInit(): void {
     this.ingredientForm = new FormGroup
       ( { 'name': new FormControl(null, Validators.required)
-        , 'amount': new FormControl(null, [Validators.required, this.numericValidator])
+        , 'amount': new FormControl(null, [Validators.required, Validators.pattern("[0-9]*[1-9][0-9]*")])
         }
       )
     ;
@@ -38,10 +38,6 @@ export class ShoppingEditComponent implements OnInit {
 
   onClear() {
     this.ingredientForm.reset();
-  }
-
-  private numericValidator(control: FormGroup): {[s:string]: boolean} {
-    return isNaN(parseInt(control.value)) ? {'amountIsNaN': true } : null;
   }
 
 }
