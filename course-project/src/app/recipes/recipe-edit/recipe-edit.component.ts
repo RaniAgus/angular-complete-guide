@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Ingredient } from 'src/app/shared/ingredient.model';
-import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 
 @Component({
@@ -14,7 +13,6 @@ export class RecipeEditComponent implements OnInit {
   editMode: boolean = false;
 
   index: number;
-  recipe: Recipe;
   recipeForm: FormGroup;
 
   constructor(private recipeService: RecipeService, private router: Router, private route: ActivatedRoute) { }
@@ -25,8 +23,7 @@ export class RecipeEditComponent implements OnInit {
         if(params['id'] != null) {
           this.editMode = true;
           this.index = +params['id'];
-          this.recipe = this.recipeService.getRecipeById(this.index);
-          this.initForm(); // Muy importante cargarlo aca para cuando se reinicie la pagina!
+          this.initForm(this.recipeService.getRecipeById(this.index)); // Muy importante cargarlo aca para cuando se reinicie la pagina!
         }
       }
     );
@@ -55,18 +52,18 @@ export class RecipeEditComponent implements OnInit {
     this.router.navigate(['..'], { relativeTo: this.route });
   }
 
-  private initForm() {
+  private initForm(recipe) {
     this.recipeForm = new FormGroup
-    ( { 'name': new FormControl(this.editMode ? this.recipe.name : '', Validators.required)
-      , 'description': new FormControl(this.editMode ? this.recipe.description : '', Validators.required)
-      , 'imagePath': new FormControl(this.editMode ? this.recipe.imagePath : '', Validators.required)
-      , 'ingredients': new FormArray(this.editMode ? this.ingredientsFormGroups : [])
+    ( { 'name': new FormControl(this.editMode ? recipe.name : '', Validators.required)
+      , 'description': new FormControl(this.editMode ? recipe.description : '', Validators.required)
+      , 'imagePath': new FormControl(this.editMode ? recipe.imagePath : '', Validators.required)
+      , 'ingredients': new FormArray(this.editMode ? this.getIngredientsFormGroups(recipe) : [])
       }
     );
   }
 
-  private get ingredientsFormGroups() {
-    return this.recipe.ingredients.map( (ingredient: Ingredient) => this.ingredientToFormGroup(ingredient.name, ingredient.amount) );
+  private getIngredientsFormGroups(recipe) {
+    return recipe.ingredients.map( (ingredient: Ingredient) => this.ingredientToFormGroup(ingredient.name, ingredient.amount) );
   }
 
   private ingredientToFormGroup(name, amount) {
