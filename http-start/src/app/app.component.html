@@ -63,7 +63,7 @@
         </div>
       </div>
       <p *ngIf="isFetching">Loading...</p>
-      <div class="alert alert-danger">
+      <div class="alert alert-danger" *ngIf="error">
         <p>
           <strong>An error occurred!</strong>
           {{error}}

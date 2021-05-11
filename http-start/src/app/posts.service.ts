@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Post } from './post.model';
 
@@ -7,12 +8,14 @@ import { Post } from './post.model';
   providedIn: 'root'
 })
 export class PostsService {
+  error = new Subject<string>();
 
   constructor(private http: HttpClient) { }
 
   createAndStorePost(postData: Post) {
-    return this.http
-      .post<{ name: string }>('https://ng-complete-guide-1baa5-default-rtdb.firebaseio.com/posts.json', postData); // URL de la request + body
+    this.http
+      .post<{ name: string }>('https://ng-complete-guide-1baa5-default-rtdb.firebaseio.com/posts.json', postData) // URL de la request + body
+      .subscribe(() => {}, error => this.error.next(error.message)); // Si no me suscribo a la respuesta, Angular no va a enviar la consulta
   } 
 
   fetchPosts() {

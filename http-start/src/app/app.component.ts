@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Post } from './post.model';
 import { PostsService } from './posts.service';
 
@@ -7,20 +8,26 @@ import { PostsService } from './posts.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   loadedPosts = [];
   isFetching: boolean = false;
   error = null;
+  errorSub: Subscription;
 
   constructor(private postsService: PostsService) {} // Se inyecta la dependencia
 
   ngOnInit() {
+    this.errorSub = this.postsService.error.subscribe(errorMessage => this.error = errorMessage);
     this.onFetchPosts();
+  }
+
+  ngOnDestroy() {
+    this.errorSub.unsubscribe();
   }
 
   onCreatePost(postData: Post) {
     // Send Http request
-    this.postsService.createAndStorePost(postData).subscribe(() => this.onFetchPosts()); // Si no me suscribo a la respuesta, Angular no va a enviar la consulta
+    this.postsService.createAndStorePost(postData);
   }
 
   onFetchPosts() {
