@@ -34,7 +34,8 @@ export class PostsService {
               }
               return postsArray;
             }
-          ) 
+          ) // Se puede usar catchError para enviarlo a analytics o cosas similares no relacionadas a la View. 
+            // Debe retornar throwError para que la cadena continúe
         )
       ;
   }
