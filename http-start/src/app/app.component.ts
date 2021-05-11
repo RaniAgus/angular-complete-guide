@@ -10,6 +10,7 @@ import { Post } from './post.model';
 })
 export class AppComponent implements OnInit {
   loadedPosts = [];
+  isFetching: boolean = false;
 
   constructor(private http: HttpClient) {} // Se inyecta la dependencia
 
@@ -35,6 +36,7 @@ export class AppComponent implements OnInit {
   }
 
   fetchPosts() {
+    this.isFetching = true;
     this.http
       .get<{ [key: string]: Post }>('https://ng-complete-guide-1baa5-default-rtdb.firebaseio.com/posts.json')
       .pipe  // Es buena practica usar los operadores de rxjs
@@ -52,7 +54,7 @@ export class AppComponent implements OnInit {
             }
           ) 
         )
-      .subscribe(posts => this.loadedPosts = posts)
+      .subscribe(posts => { this.loadedPosts = posts; this.isFetching = false; })
       ;
   }
   

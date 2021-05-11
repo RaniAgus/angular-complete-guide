@@ -51,15 +51,18 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-md-6 col-md-offset-3">
-      <p *ngIf="loadedPosts.length === 0">No posts available!</p>
-      <div class="panel panel-primary" *ngFor="let post of loadedPosts">
-        <div class="panel-heading">
-          <h3>{{ post.title }}</h3>
-        </div>
-        <div class="panel-body">
-          <p>{{ post.content }}</p>
+      <p *ngIf="loadedPosts.length === 0 && !isFetching">No posts available!</p>
+      <div *ngIf="loadedPosts.length > 0 && !isFetching">
+        <div class="panel panel-primary" *ngFor="let post of loadedPosts">
+          <div class="panel-heading">
+            <h3>{{ post.title }}</h3>
+          </div>
+          <div class="panel-body">
+            <p>{{ post.content }}</p>
+          </div>
         </div>
       </div>
+      <p *ngIf="isFetching">Loading...</p>
     </div>
   </div>
 </div>
