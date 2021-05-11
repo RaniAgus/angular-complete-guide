@@ -8,19 +8,20 @@ import { Post } from './post.model';
   providedIn: 'root'
 })
 export class PostsService {
+  postUrl = 'https://ng-complete-guide-1baa5-default-rtdb.firebaseio.com/posts.json';
   error = new Subject<string>();
 
   constructor(private http: HttpClient) { }
 
   createAndStorePost(postData: Post) {
     this.http
-      .post<{ name: string }>('https://ng-complete-guide-1baa5-default-rtdb.firebaseio.com/posts.json', postData) // URL de la request + body
+      .post<{ name: string }>(this.postUrl, postData) // URL de la request + body
       .subscribe(() => {}, error => this.error.next(error.message)); // Si no me suscribo a la respuesta, Angular no va a enviar la consulta
   } 
 
   fetchPosts() {
     return this.http
-      .get<{ [key: string]: Post }>('https://ng-complete-guide-1baa5-default-rtdb.firebaseio.com/posts.json')
+      .get<{ [key: string]: Post }>(this.postUrl)
       .pipe  // Es buena practica usar los operadores de rxjs
         ( map
           ( responseData => {
@@ -41,8 +42,7 @@ export class PostsService {
   }
 
   clearPosts() {
-    return this.http
-      .delete('https://ng-complete-guide-1baa5-default-rtdb.firebaseio.com/posts.json');
+    return this.http.delete(this.postUrl);
   }
 
 }
