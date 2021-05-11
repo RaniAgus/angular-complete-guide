@@ -10,6 +10,7 @@ import { PostsService } from './posts.service';
 export class AppComponent implements OnInit {
   loadedPosts = [];
   isFetching: boolean = false;
+  error = null;
 
   constructor(private postsService: PostsService) {} // Se inyecta la dependencia
 
@@ -25,7 +26,11 @@ export class AppComponent implements OnInit {
   onFetchPosts() {
     // Send Http request
     this.isFetching = true;
-    this.postsService.fetchPosts().subscribe(posts => { this.loadedPosts = posts; this.isFetching = false; });
+    this.postsService.fetchPosts().subscribe
+      ( posts => { this.loadedPosts = posts; this.isFetching = false; }
+      , error => { this.error = error.message; this.isFetching = false; }
+      )
+    ;
   }
 
   onClearPosts() {
