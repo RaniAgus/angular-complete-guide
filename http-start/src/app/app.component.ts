@@ -11,7 +11,9 @@ export class AppComponent implements OnInit {
 
   constructor(private http: HttpClient) {} // Se inyecta la dependencia
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.fetchPosts();
+  }
 
   onCreatePost(postData: { title: string, content: string }) {
     // Send Http request
@@ -23,9 +25,17 @@ export class AppComponent implements OnInit {
 
   onFetchPosts() {
     // Send Http request
+    this.fetchPosts();
   }
 
   onClearPosts() {
     // Send Http request
+  }
+
+  fetchPosts() {
+    this.http
+      .get('https://ng-complete-guide-1baa5-default-rtdb.firebaseio.com/posts.json')
+      .subscribe(posts => console.log(posts)) // Habra que transformar esto de alguna forma
+      ;
   }
 }
