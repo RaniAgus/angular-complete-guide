@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
 
   onCreatePost(postData: Post) {
     // Send Http request
-    this.postsService.createAndStorePost(postData);
+    this.postsService.createAndStorePost(postData).subscribe(() => this.onFetchPosts()); // Si no me suscribo a la respuesta, Angular no va a enviar la consulta
   }
 
   onFetchPosts() {
@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
 
   onClearPosts() {
     // Send Http request
+    this.postsService.clearPosts().subscribe(() => this.onFetchPosts());
   }
   
 }

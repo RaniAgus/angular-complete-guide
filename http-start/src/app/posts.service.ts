@@ -11,10 +11,8 @@ export class PostsService {
   constructor(private http: HttpClient) { }
 
   createAndStorePost(postData: Post) {
-    this.http
-      .post<{ name: string }>('https://ng-complete-guide-1baa5-default-rtdb.firebaseio.com/posts.json', postData) // URL de la request + body
-      .subscribe(responseData => console.log(responseData)); // Si no me suscribo a la respuesta, Angular no va a enviar la consulta
-      ;
+    return this.http
+      .post<{ name: string }>('https://ng-complete-guide-1baa5-default-rtdb.firebaseio.com/posts.json', postData); // URL de la request + body
   } 
 
   fetchPosts() {
@@ -38,5 +36,9 @@ export class PostsService {
       ;
   }
 
+  clearPosts() {
+    return this.http
+      .delete('https://ng-complete-guide-1baa5-default-rtdb.firebaseio.com/posts.json');
+  }
 
 }
