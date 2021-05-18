@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+const baseUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:';
 const API_KEY = 'AIzaSyDKNNp9Xpn92y9pATWeynlFxXxpqZDFkog';
 
 // Es una buena práctica
@@ -12,6 +13,7 @@ interface AuthResponseData {
   refreshToken: string;
   expiresIn: string;
   localId: string;
+  registered?: boolean;
 }
 
 @Injectable({
@@ -22,25 +24,40 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   signup(email: string, password: string) {
-    let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + API_KEY;
+    let url = baseUrl + 'signUp?key=' + API_KEY;
     return this.http
       .post<AuthResponseData>
         ( url
         , { email: email, password: password, returnSecureToken: true }
         )
-      .pipe(catchError(errorRes => throwError(this.getErrorMessage(errorRes))))
+      .pipe(catchError(this.handleError))
     ;
   }
 
-  private getErrorMessage(errorRes) {
+  login(email: string, password: string) {
+    let url = baseUrl + 'signInWithPassword?key=' + API_KEY;
+    return this.http
+      .post<AuthResponseData>
+        ( url
+        , { email: email, password: password, returnSecureToken: true }
+        )
+      .pipe(catchError(this.handleError))
+    ;
+  }
+
+  private handleError(errorRes: HttpErrorResponse) {
     if(!errorRes.error || !errorRes.error.error) {
-      return 'A network error occurred.';
+      return throwError('A network error occurred.');
     }
     switch (errorRes.error.error.message) {
       case 'EMAIL_EXISTS':
-        return 'This email already exists.';
+        return throwError('This email already exists.');
+      case 'EMAIL_NOT_FOUND':
+      case 'INVALID_PASSWORD':
+        return throwError("Wrong email or password.");
       default:
-        return 'An unknown error occurred.';
+        return throwError('An unknown error occurred.');
     }
   }
+
 }

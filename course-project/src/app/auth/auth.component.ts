@@ -39,21 +39,21 @@ export class AuthComponent implements OnInit {
 
     const email = form.value.email;
     const password = form.value.password;
-    if(this.isLoginMode) {
-      // ...
-    } else {
-      this.authService.signup(email, password)
-        .subscribe
-          ( responseData => {
-              console.log(responseData);
-              this.onLoaded(null);
-            }
-          , error => {
-              this.onLoaded(error);
-            }
-          )
-      ;
-    }
+    
+    let authObs = this.isLoginMode 
+      ? this.authService.login(email, password)
+      : this.authService.signup(email, password)
+
+    authObs.subscribe
+      ( responseData => {
+          console.log(responseData);
+          this.onLoaded(null);
+        }
+      , error => {
+          this.onLoaded(error);
+        }
+      )
+    ;
 
     form.reset();
   }
