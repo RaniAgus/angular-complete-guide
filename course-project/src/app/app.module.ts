@@ -19,6 +19,7 @@ import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.compon
 import { RecipeService } from './recipes/recipe.service';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule
 (
@@ -34,6 +35,7 @@ import { HttpClientModule } from '@angular/common/http';
       , ShoppingEditComponent
       , NotFoundComponent
       , RecipeStartComponent
+      , AuthComponent
       , DropdownDirective
       ]
   , imports: 
