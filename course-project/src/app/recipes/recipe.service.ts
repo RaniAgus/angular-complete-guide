@@ -6,29 +6,16 @@ import { Recipe } from './recipe.model'
 
 @Injectable({providedIn: 'root'})
 export class RecipeService {
-  private recipes:Recipe[] = 
-    [ new Recipe
-      ( 'Milanesa con papas'
-      , 'This is simply a test'
-      , 'https://via.placeholder.com/300'
-      , [ new Ingredient('Meat', 1)
-        , new Ingredient('French Fries', 20)
-        ]
-      )
-    , new Recipe
-      ( 'Hamburguesa'
-      , 'This is another test'
-      , 'https://via.placeholder.com/300'
-      , [ new Ingredient('Buns', 2)
-        , new Ingredient('Meat', 1)
-        ]
-      )
-    ]
-  ;
+  private recipes:Recipe[] = [];
 
   private recipesChanged: Subject<void> = new Subject<void>();
 
   constructor(private shoppingListService: ShoppingListService) {}
+
+  setRecipes(recipes: Recipe[]): void {
+    this.recipes = recipes;
+    this.recipesChanged.next();
+  }
 
   getRecipes(): Recipe[] {
     return this.recipes.slice();
