@@ -4,7 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { RecipeService } from '../recipes/recipe.service';
 import { Recipe } from '../recipes/recipe.model';
 
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 const url = 'https://ng-complete-guide-1baa5-default-rtdb.firebaseio.com/';
 
@@ -23,19 +24,22 @@ export class DataStorageService {
     ;
   }
 
-  fetchRecipes(): void {
-    this.http
+  fetchRecipes(): Observable<Recipe[]> {
+    return this.http
       .get<Recipe[]>(url + 'recipes.json')
       .pipe
         ( map
           ( recipes => recipes.map
             ( recipe => { 
-                return {...recipe, ingredients: recipe.ingredients ? recipe.ingredients : []} 
+                return {
+                  ...recipe
+                  , ingredients: recipe.ingredients ? recipe.ingredients : []
+                  } 
               }
             )
           )
+        , tap(recipes => this.recipeService.setRecipes(recipes))
         )
-      .subscribe(recipes => this.recipeService.setRecipes(recipes))
     ;
   }
 }
