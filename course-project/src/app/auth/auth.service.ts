@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, take, tap } from 'rxjs/operators';
 import { User } from './user.model';
 
 const baseUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:';
@@ -21,7 +21,7 @@ interface AuthResponseData {
   providedIn: 'root'
 })
 export class AuthService {
-  user$: Subject<User> = new Subject<User>();
+  user$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
 
   constructor(private http: HttpClient) {}
 
@@ -49,6 +49,10 @@ export class AuthService {
         , tap(this.handleAuthentication.bind(this))
         )
     ;
+  }
+
+  get user(): Observable<User> {
+    return this.user$.pipe(take(1));
   }
 
   private handleAuthentication(response: AuthResponseData) {
