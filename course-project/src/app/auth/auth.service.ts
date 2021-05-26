@@ -5,7 +5,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { User } from './user.model';
 
 const baseUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:';
-const API_KEY = 'AIzaSyDKNNp9Xpn92y9pATWeynlFxXxpqZDFkog';
+const API_KEY = 'key=AIzaSyDKNNp9Xpn92y9pATWeynlFxXxpqZDFkog';
 
 // Es una buena práctica
 interface AuthResponseData {
@@ -21,46 +21,47 @@ interface AuthResponseData {
   providedIn: 'root'
 })
 export class AuthService {
-  user: Subject<User> = new Subject<User>();
+  user$: Subject<User> = new Subject<User>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   signup(email: string, password: string) {
-    let url = baseUrl + 'signUp?key=' + API_KEY;
     return this.http
       .post<AuthResponseData>
-        ( url
+        ( `${baseUrl}signUp?${API_KEY}`
         , { email: email, password: password, returnSecureToken: true }
         )
-      .pipe( catchError(this.handleError), tap(this.handleAuthentication) )
+      .pipe
+        ( catchError(this.handleError)
+        , tap(this.handleAuthentication.bind(this))
+        )
     ;
   }
 
   login(email: string, password: string) {
-    let url = baseUrl + 'signInWithPassword?key=' + API_KEY;
     return this.http
       .post<AuthResponseData>
-        ( url
+      ( `${baseUrl}signInWithPassword?${API_KEY}`
         , { email: email, password: password, returnSecureToken: true }
         )
-      .pipe( catchError(this.handleError), tap(this.handleAuthentication) )
+      .pipe
+        ( catchError(this.handleError)
+        , tap(this.handleAuthentication.bind(this))
+        )
     ;
   }
 
   private handleAuthentication(response: AuthResponseData) {
     // expiresIn es un string que contiene el tiempo de expiración en 
     // segundos, lo pasamos a milisegundos
-    const expirationDate = new Date(
-      new Date().getTime() + +response.expiresIn * 1000 
-    );
     const user = new User
       ( response.email
       , response.localId
       , response.idToken
-      , expirationDate
+      , new Date( new Date().getTime() + +response.expiresIn * 1000 )
       )
     ;
-    this.user.next(user);
+    this.user$.next(user);
   }
 
   private handleError(errorRes: HttpErrorResponse) {
