@@ -1,7 +1,8 @@
-import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Subject, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { User } from './user.model';
 
 const baseUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:';
 const API_KEY = 'AIzaSyDKNNp9Xpn92y9pATWeynlFxXxpqZDFkog';
@@ -20,6 +21,7 @@ interface AuthResponseData {
   providedIn: 'root'
 })
 export class AuthService {
+  user: Subject<User> = new Subject<User>();
 
   constructor(private http: HttpClient) { }
 
@@ -30,7 +32,7 @@ export class AuthService {
         ( url
         , { email: email, password: password, returnSecureToken: true }
         )
-      .pipe(catchError(this.handleError))
+      .pipe( catchError(this.handleError), tap(this.handleAuthentication) )
     ;
   }
 
@@ -41,8 +43,24 @@ export class AuthService {
         ( url
         , { email: email, password: password, returnSecureToken: true }
         )
-      .pipe(catchError(this.handleError))
+      .pipe( catchError(this.handleError), tap(this.handleAuthentication) )
     ;
+  }
+
+  private handleAuthentication(response: AuthResponseData) {
+    // expiresIn es un string que contiene el tiempo de expiración en 
+    // segundos, lo pasamos a milisegundos
+    const expirationDate = new Date(
+      new Date().getTime() + +response.expiresIn * 1000 
+    );
+    const user = new User
+      ( response.email
+      , response.localId
+      , response.idToken
+      , expirationDate
+      )
+    ;
+    this.user.next(user);
   }
 
   private handleError(errorRes: HttpErrorResponse) {
