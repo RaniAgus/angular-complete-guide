@@ -1,7 +1,8 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { finalize, take, takeUntil } from 'rxjs/operators';
 import { AlertComponent } from '../shared/alert/alert.component';
 import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
 import { AuthService } from './auth.service';
@@ -11,10 +12,12 @@ import { AuthService } from './auth.service';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
   isLoginMode: boolean = false;
   isLoading: boolean = false;
   // error: string = null;
+
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
   @ViewChild(PlaceholderDirective, {static: false})
   alertHost: PlaceholderDirective;
@@ -26,6 +29,11 @@ export class AuthComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 
   // onLoad() {
@@ -56,7 +64,8 @@ export class AuthComponent implements OnInit {
       : this.authService.signup(email, password)
 
     authObs
-      .pipe(tap(responseData => this.isLoading = false))
+      // finalize() ejecuta en éxito y en error, tap() no
+      .pipe(finalize(() => this.isLoading = false))
       .subscribe
         ( responseData => {
             console.log(responseData);
@@ -76,12 +85,26 @@ export class AuthComponent implements OnInit {
   //}
 
   private showErrorAlert(errorMessage: string) {
+    // Obtengo la forma de crear el componente
     const alertComponentFactory = this.componentFactoryResolver
       .resolveComponentFactory(AlertComponent);
 
+    // Obtengo la referencia en el DOM donde quiero que esté el componente
     const hostViewContainerRef = this.alertHost.viewContainerRef;
+
+    // Limpio la referencia si ésta tenía algún otro componente
     hostViewContainerRef.clear();
 
-    hostViewContainerRef.createComponent(alertComponentFactory);
+    // Creo el componente
+    const componentRef = hostViewContainerRef.createComponent(alertComponentFactory);
+
+    // Data binding
+    componentRef.instance.message = errorMessage;
+
+    // Event binding
+    componentRef.instance.close
+      // Finaliza el componente tanto al destruirlo como al obtener la primera respuesta
+      .pipe(takeUntil(this.destroy$), take(1))
+      .subscribe(() => hostViewContainerRef.clear());
   }
 }
