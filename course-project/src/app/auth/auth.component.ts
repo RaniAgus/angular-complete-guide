@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
+import { AlertComponent } from '../shared/alert/alert.component';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -11,22 +13,26 @@ import { AuthService } from './auth.service';
 export class AuthComponent implements OnInit {
   isLoginMode: boolean = false;
   isLoading: boolean = false;
-  error: string = null;
+  // error: string = null;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor
+    ( private authService: AuthService
+    , private router: Router
+    , private componentFactoryResolver: ComponentFactoryResolver
+    ) { }
 
   ngOnInit(): void {
   }
 
-  onLoad() {
-    this.isLoading = true;
-    this.error = null;
-  }
+  // onLoad() {
+  //   this.isLoading = true;
+  //   this.error = null;
+  // }
 
-  onLoaded(error: string) {
-    this.isLoading = false;
-    this.error = error;
-  }
+  // onLoaded(error: string) {
+  //   this.isLoading = false;
+  //   this.error = error;
+  // }
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -36,7 +42,7 @@ export class AuthComponent implements OnInit {
     if(!form.valid) {
       return;
     }
-    this.onLoad();
+    this.isLoading = true;
 
     const email = form.value.email;
     const password = form.value.password;
@@ -45,22 +51,30 @@ export class AuthComponent implements OnInit {
       ? this.authService.login(email, password)
       : this.authService.signup(email, password)
 
-    authObs.subscribe
-      ( responseData => {
-          console.log(responseData);
-          this.onLoaded(null);
-          this.router.navigate(['/recipes']);
-        }
-      , error => {
-          this.onLoaded(error);
-        }
-      )
+    authObs
+      .pipe(tap(responseData => this.isLoading = false))
+      .subscribe
+        ( responseData => {
+            console.log(responseData);
+            this.router.navigate(['/recipes']);
+          }
+        , error => {
+            this.showErrorAlert(error);
+          }
+        )
     ;
 
     form.reset();
   }
 
-  onErrorHandled() {
-    this.error = null;
+  // onErrorHandled() {
+  //   this.error = null;
+  //}
+
+  private showErrorAlert(errorMessage: string) {
+    const alertComponentFactory = this.componentFactoryResolver
+      .resolveComponentFactory(AlertComponent);
+
+    
   }
 }
