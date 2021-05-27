@@ -1,8 +1,9 @@
-import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { AlertComponent } from '../shared/alert/alert.component';
+import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -14,6 +15,9 @@ export class AuthComponent implements OnInit {
   isLoginMode: boolean = false;
   isLoading: boolean = false;
   // error: string = null;
+
+  @ViewChild(PlaceholderDirective, {static: false})
+  alertHost: PlaceholderDirective;
 
   constructor
     ( private authService: AuthService
@@ -75,6 +79,9 @@ export class AuthComponent implements OnInit {
     const alertComponentFactory = this.componentFactoryResolver
       .resolveComponentFactory(AlertComponent);
 
-    
+    const hostViewContainerRef = this.alertHost.viewContainerRef;
+    hostViewContainerRef.clear();
+
+    hostViewContainerRef.createComponent(alertComponentFactory);
   }
 }
