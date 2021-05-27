@@ -12,7 +12,7 @@ import { DataStorageService } from '../shared/data-storage.service';
   , styleUrls: ['header.component.css']
   }
 )
-export class HeaderComponent implements OnInit, OnDestroy{
+export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   private destroy$: Subject<boolean> = new Subject();
 
@@ -41,5 +41,9 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
   onFetchData() {
     this.dataStorageService.fetchRecipes().subscribe();
+  }
+
+  onLogout() {
+    this.authService.logout();
   }
 }

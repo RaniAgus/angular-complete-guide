@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
 import { User } from './user.model';
@@ -23,7 +24,7 @@ interface AuthResponseData {
 export class AuthService {
   user$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   signup(email: string, password: string) {
     return this.http
@@ -49,6 +50,12 @@ export class AuthService {
         , tap(this.handleAuthentication.bind(this))
         )
     ;
+  }
+
+  logout() {
+    // O sea, se resetea al valor por defecto al iniciar la app 
+    this.user$.next(null);
+    this.router.navigate(['/auth']);
   }
 
   get user(): Observable<User> {
