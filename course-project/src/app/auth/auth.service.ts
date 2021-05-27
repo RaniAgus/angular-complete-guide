@@ -52,6 +52,29 @@ export class AuthService {
     ;
   }
 
+  autoLogin() {
+    const userData:
+    { email: string
+    ; id: string
+    ; _token: string
+    ; _tokenExpirationDate: string
+    } = JSON.parse(localStorage.getItem('userData'));
+
+    if(userData) {
+      const loadedUser = new User
+        ( userData.email
+        , userData.id
+        , userData._token
+        , new Date(userData._tokenExpirationDate)
+        )
+      ;
+
+      if(loadedUser.token) {
+        this.user$.next(loadedUser);
+      }
+    }
+  }
+
   logout() {
     // O sea, se resetea al valor por defecto al iniciar la app 
     this.user$.next(null);
@@ -73,6 +96,9 @@ export class AuthService {
       )
     ;
     this.user$.next(user);
+
+    //Se guarda en Application/Storage/Local Storage/localhost:4200
+    localStorage.setItem('userData', JSON.stringify(user));
   }
 
   private handleError(errorRes: HttpErrorResponse) {
