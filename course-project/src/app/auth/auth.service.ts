@@ -23,6 +23,7 @@ interface AuthResponseData {
 })
 export class AuthService {
   user$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+  tokenExpirationTimer: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -71,6 +72,10 @@ export class AuthService {
 
       if(loadedUser.token) {
         this.user$.next(loadedUser);
+        const expiresIn =
+          new Date(userData._tokenExpirationDate).getTime() -
+          new Date().getTime();
+        this.autoLogout(expiresIn);
       }
     }
   }
@@ -79,6 +84,16 @@ export class AuthService {
     // O sea, se resetea al valor por defecto al iniciar la app 
     this.user$.next(null);
     this.router.navigate(['/auth']);
+    localStorage.removeItem('userData');
+    if(this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
+  }
+
+  autoLogout(expiresIn: number) {
+    console.log(expiresIn);
+    this.tokenExpirationTimer = setTimeout(() => this.logout(), expiresIn);
   }
 
   get user(): Observable<User> {
@@ -96,6 +111,10 @@ export class AuthService {
       )
     ;
     this.user$.next(user);
+
+    // Después de cargar el usuario, emite un timer que te desloguea cuando
+    // expire el token
+    this.autoLogout(+response.expiresIn * 1000)
 
     //Se guarda en Application/Storage/Local Storage/localhost:4200
     localStorage.setItem('userData', JSON.stringify(user));
