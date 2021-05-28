@@ -8,6 +8,16 @@ import { User } from './user.model';
 const baseUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:';
 const API_KEY = 'key=AIzaSyDKNNp9Xpn92y9pATWeynlFxXxpqZDFkog';
 
+const NETWORK_ERROR_MESSAGE = 'A network error occurred.';
+
+const ERROR_MESSAGES = {
+  'EMAIL_EXISTS': 'This email already exists.',
+  'EMAIL_NOT_FOUND': 'Wrong email or password.',
+  'INVALID_PASSWORD': 'Wrong email or password.'
+};
+
+const DEFAULT_ERROR_MESSAGE = 'An unknown error occurred.';
+
 // Es una buena práctica
 interface AuthResponseData {
   idToken: string;
@@ -121,18 +131,10 @@ export class AuthService {
   }
 
   private handleError(errorRes: HttpErrorResponse) {
-    if(!errorRes.error || !errorRes.error.error) {
-      return throwError('A network error occurred.');
-    }
-    switch (errorRes.error.error.message) {
-      case 'EMAIL_EXISTS':
-        return throwError('This email already exists.');
-      case 'EMAIL_NOT_FOUND':
-      case 'INVALID_PASSWORD':
-        return throwError("Wrong email or password.");
-      default:
-        return throwError('An unknown error occurred.');
-    }
+    return throwError(
+      !errorRes.error || !errorRes.error.error ? NETWORK_ERROR_MESSAGE : 
+      ERROR_MESSAGES[errorRes.error.error.message] || DEFAULT_ERROR_MESSAGE
+    );
   }
 
 }
