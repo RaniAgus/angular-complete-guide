@@ -1,11 +1,8 @@
-import { Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
-
-import { AlertComponent } from '../shared/alert/alert.component';
-import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
 
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../shared/dialog/dialog.component';
@@ -20,17 +17,12 @@ import { AuthService } from './auth.service';
 export class AuthComponent implements OnInit, OnDestroy {
   isLoginMode: boolean = false;
   isLoading: boolean = false;
-  // error: string = null;
 
   destroy$: Subject<boolean> = new Subject<boolean>();
-
-  @ViewChild(PlaceholderDirective, {static: false})
-  alertHost: PlaceholderDirective;
 
   constructor
     ( private authService: AuthService
     , private router: Router
-    , private componentFactoryResolver: ComponentFactoryResolver
     , private dialog: MatDialog
     ) { }
 
@@ -41,16 +33,6 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.destroy$.next(true);
     this.destroy$.complete();
   }
-
-  // onLoad() {
-  //   this.isLoading = true;
-  //   this.error = null;
-  // }
-
-  // onLoaded(error: string) {
-  //   this.isLoading = false;
-  //   this.error = error;
-  // }
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -86,10 +68,6 @@ export class AuthComponent implements OnInit, OnDestroy {
     form.reset();
   }
 
-  // onErrorHandled() {
-  //   this.error = null;
-  //}
-
   private showErrorDialog(errorMessage: string) {
     let dialogRef = this.dialog.open(DialogComponent, {
       data: errorMessage,
@@ -102,27 +80,52 @@ export class AuthComponent implements OnInit, OnDestroy {
     ;
   }
 
-  private showErrorAlert(errorMessage: string) {
-    // Obtengo la forma de crear el componente
-    const alertComponentFactory = this.componentFactoryResolver
-      .resolveComponentFactory(AlertComponent);
+  // ======================= DYNAMIC COMPONENT WITH NGIF ======================= 
 
-    // Obtengo la referencia en el DOM donde quiero que esté el componente
-    const hostViewContainerRef = this.alertHost.viewContainerRef;
+  // error: string = null;
 
-    // Limpio la referencia si ésta tenía algún otro componente
-    hostViewContainerRef.clear();
+  // onLoad() {
+  //   this.isLoading = true;
+  //   this.error = null;
+  // }
 
-    // Creo el componente
-    const componentRef = hostViewContainerRef.createComponent(alertComponentFactory);
+  // onLoaded(error: string) {
+  //   this.isLoading = false;
+  //   this.error = error;
+  // }
 
-    // Data binding
-    componentRef.instance.message = errorMessage;
+  // onErrorHandled() {
+  //   this.error = null;
+  //}
 
-    // Event binding
-    componentRef.instance.close
-      // Finaliza el componente tanto al destruirlo como al obtener la primera respuesta
-      .pipe(takeUntil(this.destroy$), take(1))
-      .subscribe(() => hostViewContainerRef.clear());
-  }
+  // ==================== DYNAMIC COMPONENT PROGRAMATICALLY ====================
+
+  // @ViewChild(PlaceholderDirective, {static: false})
+  // alertHost: PlaceholderDirective;
+
+  // constructor(private componentFactoryResolver: ComponentFactoryResolver)
+
+  // private showErrorAlert(errorMessage: string) {
+  //   // Obtengo la forma de crear el componente
+  //   const alertComponentFactory = this.componentFactoryResolver
+  //     .resolveComponentFactory(AlertComponent);
+
+  //   // Obtengo la referencia en el DOM donde quiero que esté el componente
+  //   const hostViewContainerRef = this.alertHost.viewContainerRef;
+
+  //   // Limpio la referencia si ésta tenía algún otro componente
+  //   hostViewContainerRef.clear();
+
+  //   // Creo el componente
+  //   const componentRef = hostViewContainerRef.createComponent(alertComponentFactory);
+
+  //   // Data binding
+  //   componentRef.instance.message = errorMessage;
+
+  //   // Event binding
+  //   componentRef.instance.close
+  //     // Finaliza el componente tanto al destruirlo como al obtener la primera respuesta
+  //     .pipe(takeUntil(this.destroy$), take(1))
+  //     .subscribe(() => hostViewContainerRef.clear());
+  // }
 }
