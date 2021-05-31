@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -24,6 +25,8 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AlertComponent } from './shared/alert/alert.component';
 import { PlaceholderDirective } from './shared/placeholder/placeholder.directive';
+import { DialogComponent } from './shared/dialog/dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule
 (
@@ -44,6 +47,7 @@ import { PlaceholderDirective } from './shared/placeholder/placeholder.directive
       , LoadingSpinnerComponent
       , AlertComponent
       , PlaceholderDirective
+      , DialogComponent
       ]
   , imports: 
       [ BrowserModule
@@ -51,6 +55,8 @@ import { PlaceholderDirective } from './shared/placeholder/placeholder.directive
       , ReactiveFormsModule
       , HttpClientModule
       , AppRoutingModule
+      , MatDialogModule
+      , BrowserAnimationsModule
       ]
   , providers: 
       [RecipeService
@@ -61,6 +67,7 @@ import { PlaceholderDirective } from './shared/placeholder/placeholder.directive
         }
       ]
   , bootstrap: [AppComponent]
+  , entryComponents: [DialogComponent]
   }
 )
 export class AppModule { }

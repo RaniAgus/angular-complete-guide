@@ -3,8 +3,13 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { finalize, take, takeUntil } from 'rxjs/operators';
+
 import { AlertComponent } from '../shared/alert/alert.component';
 import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
+
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../shared/dialog/dialog.component';
+
 import { AuthService } from './auth.service';
 
 @Component({
@@ -26,6 +31,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     ( private authService: AuthService
     , private router: Router
     , private componentFactoryResolver: ComponentFactoryResolver
+    , private dialog: MatDialog
     ) { }
 
   ngOnInit(): void {
@@ -72,7 +78,7 @@ export class AuthComponent implements OnInit, OnDestroy {
             this.router.navigate(['/recipes']);
           }
         , error => {
-            this.showErrorAlert(error);
+            this.showErrorDialog(error);
           }
         )
     ;
@@ -83,6 +89,18 @@ export class AuthComponent implements OnInit, OnDestroy {
   // onErrorHandled() {
   //   this.error = null;
   //}
+
+  private showErrorDialog(errorMessage: string) {
+    let dialogRef = this.dialog.open(DialogComponent, {
+      data: errorMessage,
+    })
+
+    dialogRef
+      .afterClosed()
+      .pipe(take(1), takeUntil(this.destroy$))
+      .subscribe()
+    ;
+  }
 
   private showErrorAlert(errorMessage: string) {
     // Obtengo la forma de crear el componente
