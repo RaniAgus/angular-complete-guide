@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatStepperModule } from '@angular/material/stepper'
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -41,21 +42,23 @@ import { MatDialogModule } from '@angular/material/dialog';
       , NotFoundComponent
       , RecipeStartComponent
       , AuthComponent
-      , DropdownDirective
       , LoadingSpinnerComponent
       , DialogComponent
+
+      , DropdownDirective
       ]
   , imports: 
       [ BrowserModule
       , FormsModule
       , ReactiveFormsModule
       , HttpClientModule
-      , AppRoutingModule
       , MatDialogModule
       , BrowserAnimationsModule
+      , MatStepperModule
+      , AppRoutingModule
       ]
   , providers: 
-      [RecipeService
+      [ RecipeService
       , ShoppingListService
       , { provide: HTTP_INTERCEPTORS
         , useClass: AuthInterceptorService

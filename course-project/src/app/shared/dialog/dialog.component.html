@@ -1,7 +1,17 @@
 <div>
     <h1 mat-dialog-title>Error</h1>
-    <div mat-dialog-content>
-        <p>{{ message }}</p>
+    <div mat-dialog-content class="custom-stepper">
+        <mat-horizontal-stepper>
+            <mat-step [completed]="false" label="Paso 1">
+                <p>Error: {{ message }}</p>
+            </mat-step>
+            <mat-step [completed]="false" label="Paso 2">
+                <p>Error: {{ message }}</p>
+            </mat-step>
+            <mat-step [completed]="false" label="Paso 3">
+                <p>Error: {{ message }}</p>
+            </mat-step>
+        </mat-horizontal-stepper>
     </div>
     <div mat-dialog-actions>
         <button class="btn btn-primary" (click)="onClose()">Close</button>
