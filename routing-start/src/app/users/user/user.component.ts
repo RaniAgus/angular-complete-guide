@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -16,6 +16,17 @@ export class UserComponent implements OnInit {
       id: this.route.snapshot.params['id'],
       name: this.route.snapshot.params['name']
     }
+
+    // Agrego esto para escuchar cambios en los params de la ruta en caso de que
+    // haya un link que me mande al mismo componente
+    this.route.params.subscribe(
+      (params: Params) => {
+        this.user = {
+          id: params['id'],
+          name: params['name']
+        }
+      }
+    );
   }
 
 }
