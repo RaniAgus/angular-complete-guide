@@ -1,11 +1,8 @@
-import { promisify } from 'util';
-
 export class AuthService {
   loggedIn = false;
 
   async isAuthenticated() {
-    await promisify(setTimeout)(800);
-    return this.loggedIn;
+    return new Promise(resolve => setTimeout(() => resolve(this.loggedIn), 800));
   }
 
   login() {
