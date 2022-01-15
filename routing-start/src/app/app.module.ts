@@ -15,11 +15,18 @@ import { RouterModule, Routes } from '@angular/router';
 
 const appRoutes: Routes = 
   [ { path: '', component: HomeComponent }
-  , { path: 'users' /* Sin el slash! */, component: UsersComponent } 
-  , { path: 'users/:id/:name', component: UserComponent } 
-  , { path: 'servers', component: ServersComponent }
-  , { path: 'servers/:id', component: ServerComponent }
-  , { path: 'servers/:id/edit', component: EditServerComponent }
+  , { path: 'users' /* Sin el slash! */
+    , component: UsersComponent
+    , children:
+      [ { path: ':id/:name', component: UserComponent } ]
+    } 
+  , { path: 'servers'
+    , component: ServersComponent
+    , children: // Todos necesitan un <router-outlet>
+      [ { path: ':id', component: ServerComponent }
+      , { path: ':id/edit', component: EditServerComponent }
+      ] 
+    }
   ]
 ;
 
