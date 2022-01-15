@@ -17,7 +17,8 @@ const appRoutes: Routes =
       [ { path: ':id/:name', component: UserComponent } ]
     } 
   , { path: 'servers'
-    , canActivateChild: [ AuthGuard ]
+    , canActivateChild: [ AuthGuard ] 
+    // La Guard tiene que tener implementado el método canActivateChild
     , component: ServersComponent
     , children: // Todos necesitan un <router-outlet>
       [ { path: ':id', component: ServerComponent }
