@@ -39,7 +39,12 @@ const appRoutes: Routes =
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes)
+    // Esto agrega un hashtag al final de la ruta para que el servidor que está
+    // hosteando la aplicación ignore lo que viene después del hashtag. Esto 
+    // evita que el servidor intente parsear la ruta y devuelva un 404 al no 
+    // encontrarla (ya que toda la app se encuentra en un solo index.html)
+    // Ej: localhost:4200/#/users
+    RouterModule.forRoot(appRoutes, { useHash: true })
   ],
   exports: [ 
     RouterModule
