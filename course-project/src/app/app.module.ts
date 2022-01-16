@@ -12,15 +12,15 @@ import { CoreModule } from './core.module';
 @NgModule
 (
   { declarations: [ AppComponent, HeaderComponent ]
-  , imports: 
+  , imports:
       [ AppRoutingModule
       , SharedModule
       , CoreModule
       // ngIf y ngFor vienen de acá, junto con cosas de inicialización de la app
-      , BrowserModule 
+      , BrowserModule
       // esto solo provee servicios (no directivas ni componentes), por lo que
       // va a estar disponible en toda la app
-      , HttpClientModule 
+      , HttpClientModule
       ]
   , bootstrap: [AppComponent]
   }

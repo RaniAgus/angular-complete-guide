@@ -6,16 +6,16 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./alert.component.css']
 })
 export class AlertComponent implements OnInit {
-  @Input() message: String;
-  @Output() close: EventEmitter<void> = new EventEmitter<void>();
-  
+  @Input() message: string;
+  @Output() alertClose: EventEmitter<void> = new EventEmitter<void>();
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
   onClose(): void {
-    this.close.emit();
+    this.alertClose.emit();
   }
 
 }

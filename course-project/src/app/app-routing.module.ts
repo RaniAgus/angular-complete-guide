@@ -1,7 +1,7 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-const appRoutes: Routes = 
+const appRoutes: Routes =
   [ { path: '', redirectTo: '/recipes', pathMatch: 'full' }
   , { path: 'auth'
     , loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
@@ -13,7 +13,7 @@ const appRoutes: Routes =
     , loadChildren: () => import('./shopping-list/shopping-list.module').then(m => m.ShoppingListModule)
     }
 // Tuve que quitarlo para que no me mande acá al entrar a /recipes
-//, { path: '**'           , redirectTo: '/404'           }
+// , { path: '**'           , redirectTo: '/404'           }
   ]
 ;
 

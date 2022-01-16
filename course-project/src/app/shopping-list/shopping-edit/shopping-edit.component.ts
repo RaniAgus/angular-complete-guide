@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ShoppingListService } from '../shopping-list.service';
 
-import { Ingredient } from './../../shared/ingredient.model'
+import { Ingredient } from './../../shared/ingredient.model';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -13,15 +13,15 @@ import { Ingredient } from './../../shared/ingredient.model'
 export class ShoppingEditComponent implements OnInit, OnDestroy {
   ingredientForm: FormGroup;
   editSubscription: Subscription;
-  isEditing: boolean = false;
+  isEditing = false;
   editingItemId: number;
 
   constructor(private shoppingListService: ShoppingListService) { }
 
   ngOnInit(): void {
     this.ingredientForm = new FormGroup
-      ( { 'name': new FormControl(null, Validators.required)
-        , 'amount': new FormControl(null, [Validators.required, Validators.pattern("[0-9]*[1-9][0-9]*")])
+      ( { name: new FormControl(null, Validators.required)
+        , amount: new FormControl(null, [Validators.required, Validators.pattern('[0-9]*[1-9][0-9]*')])
         }
       )
     ;
@@ -35,18 +35,18 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     ;
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.editSubscription.unsubscribe();
   }
 
-  isInvalid(controlName: string) : boolean {
-    let control = this.ingredientForm.get(controlName);
+  isInvalid(controlName: string): boolean {
+    const control = this.ingredientForm.get(controlName);
     return !control.valid && control.touched;
   }
 
-  onSubmit() {
-    let ingredient = new Ingredient(this.ingredientForm.get('name').value, +this.ingredientForm.get('amount').value)
-    if(this.isEditing) {
+  onSubmit(): void {
+    const ingredient = new Ingredient(this.ingredientForm.get('name').value, +this.ingredientForm.get('amount').value);
+    if (this.isEditing) {
       this.shoppingListService.updateIngredient(this.editingItemId, ingredient);
     } else {
       this.shoppingListService.addIngredient(ingredient);
@@ -54,13 +54,13 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     this.onClear();
   }
 
-  onClear() {
+  onClear(): void {
     this.ingredientForm.reset();
     this.isEditing = false;
     this.editingItemId = undefined;
   }
 
-  onDelete() {
+  onDelete(): void {
     this.shoppingListService.deleteIngredient(this.editingItemId);
     this.onClear();
   }

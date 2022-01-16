@@ -11,9 +11,9 @@ const API_KEY = 'jaja abrazo capo';
 const NETWORK_ERROR_MESSAGE = 'A network error occurred.';
 
 const ERROR_MESSAGES = {
-  'EMAIL_EXISTS': 'This email already exists.',
-  'EMAIL_NOT_FOUND': 'Wrong email or password.',
-  'INVALID_PASSWORD': 'Wrong email or password.'
+  EMAIL_EXISTS: 'This email already exists.',
+  EMAIL_NOT_FOUND: 'Wrong email or password.',
+  INVALID_PASSWORD: 'Wrong email or password.'
 };
 
 const DEFAULT_ERROR_MESSAGE = 'An unknown error occurred.';
@@ -37,11 +37,11 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  signup(email: string, password: string) {
+  signup(email: string, password: string): Observable<AuthResponseData> {
     return this.http
       .post<AuthResponseData>
         ( `${baseUrl}/accounts:signUp?key=${API_KEY}`
-        , { email: email, password: password, returnSecureToken: true }
+        , { email, password, returnSecureToken: true }
         )
       .pipe
         ( catchError(this.handleError)
@@ -50,11 +50,11 @@ export class AuthService {
     ;
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string): Observable<AuthResponseData> {
     return this.http
       .post<AuthResponseData>
       ( `${baseUrl}/accounts:signInWithPassword?key=${API_KEY}`
-        , { email: email, password: password, returnSecureToken: true }
+        , { email, password, returnSecureToken: true }
         )
       .pipe
         ( catchError(this.handleError)
@@ -63,7 +63,7 @@ export class AuthService {
     ;
   }
 
-  autoLogin() {
+  autoLogin(): void {
     const userData:
     { email: string
     ; id: string
@@ -71,7 +71,7 @@ export class AuthService {
     ; _tokenExpirationDate: string
     } = JSON.parse(localStorage.getItem('userData'));
 
-    if(userData) {
+    if (userData) {
       const loadedUser = new User
         ( userData.email
         , userData.id
@@ -80,7 +80,7 @@ export class AuthService {
         )
       ;
 
-      if(loadedUser.token) {
+      if (loadedUser.token) {
         this.user$.next(loadedUser);
         const expiresIn =
           new Date(userData._tokenExpirationDate).getTime() -
@@ -90,18 +90,18 @@ export class AuthService {
     }
   }
 
-  logout() {
-    // O sea, se resetea al valor por defecto al iniciar la app 
+  logout(): void {
+    // O sea, se resetea al valor por defecto al iniciar la app
     this.user$.next(null);
     this.router.navigate(['/auth']);
     localStorage.removeItem('userData');
-    if(this.tokenExpirationTimer) {
+    if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }
     this.tokenExpirationTimer = null;
   }
 
-  autoLogout(expiresIn: number) {
+  autoLogout(expiresIn: number): void {
     console.log({ expiresIn });
     this.tokenExpirationTimer = setTimeout(() => this.logout(), expiresIn);
   }
@@ -110,8 +110,8 @@ export class AuthService {
     return this.user$.pipe(take(1));
   }
 
-  private handleAuthentication(response: AuthResponseData) {
-    // expiresIn es un string que contiene el tiempo de expiración en 
+  private handleAuthentication(response: AuthResponseData): void {
+    // expiresIn es un string que contiene el tiempo de expiración en
     // segundos, lo pasamos a milisegundos
     const user = new User
       ( response.email
@@ -124,15 +124,15 @@ export class AuthService {
 
     // Después de cargar el usuario, emite un timer que te desloguea cuando
     // expire el token
-    this.autoLogout(+response.expiresIn * 1000)
+    this.autoLogout(+response.expiresIn * 1000);
 
-    //Se guarda en Application/Storage/Local Storage/localhost:4200
+    // Se guarda en Application/Storage/Local Storage/localhost:4200
     localStorage.setItem('userData', JSON.stringify(user));
   }
 
-  private handleError(errorRes: HttpErrorResponse) {
+  private handleError(errorRes: HttpErrorResponse): Observable<never> {
     return throwError(
-      !errorRes.error || !errorRes.error.error ? NETWORK_ERROR_MESSAGE : 
+      !errorRes.error || !errorRes.error.error ? NETWORK_ERROR_MESSAGE :
       ERROR_MESSAGES[errorRes.error.error.message] || DEFAULT_ERROR_MESSAGE
     );
   }
