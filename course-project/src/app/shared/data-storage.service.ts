@@ -6,9 +6,9 @@ import { Recipe } from '../recipes/recipe.model';
 
 import { map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
-const url = 'https://recipes-app-31096-default-rtdb.firebaseio.com';
-
+const recipesUrl = `https://${environment.FIREBASE_DATABASE_NAME}.firebaseio.com/recipes.json`;
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +22,7 @@ export class DataStorageService {
   storeRecipes(): void {
     const recipes = this.recipeService.getRecipes();
     this.http
-      .put(`${url}/recipes.json`, recipes)
+      .put(recipesUrl, recipes)
       .subscribe(
         response => console.log('recipes stored: ', response),
         error => console.log('error storing recipes: ', error)
@@ -31,7 +31,7 @@ export class DataStorageService {
   }
 
   fetchRecipes(): Observable<Recipe[]> {
-    return this.http.get<Recipe[]>(`${url}/recipes.json`)
+    return this.http.get<Recipe[]>(recipesUrl)
       .pipe
         ( map( recipes => recipes ? recipes.map(this.parseRecipe) : [] )
         , tap( recipes => this.recipeService.setRecipes(recipes) )
