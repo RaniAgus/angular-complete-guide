@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 
 import { ServersService } from '../servers.service';
 
@@ -16,10 +16,9 @@ export class ServerComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    this.server = this.serversService.getServer(+this.route.snapshot.params['id']);
-
-    this.route.params.subscribe(params => {
-      this.server = this.serversService.getServer(+params['id']);
+    this.route.data.subscribe((data: Data) => {
+      // Toma la clave 'server' que definimos en los routes
+      this.server = data['server'];
     });
   }
 
