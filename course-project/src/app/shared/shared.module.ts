@@ -1,5 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatStepperModule } from "@angular/material/stepper";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -22,17 +23,22 @@ import { PlaceholderDirective } from "./placeholder/placeholder.directive";
   [ CommonModule 
     // ngIf y ngFor vienen de acá también (BrowserModule hace otras cosas de 
     // inicialización, no queremos importarlo)
+  , FormsModule
+  , ReactiveFormsModule
+    // las features de forms vienen de acá
   , MatDialogModule
   , BrowserAnimationsModule
   , MatStepperModule
   ]
 , exports: 
-  [ AlertComponent
+  [ CommonModule
+  , FormsModule
+  , ReactiveFormsModule
+  , AlertComponent
   , DialogComponent
   , LoadingSpinnerComponent
   , PlaceholderDirective
   , DropdownDirective
-  , CommonModule
   ]
 , entryComponents: [DialogComponent]
 })
