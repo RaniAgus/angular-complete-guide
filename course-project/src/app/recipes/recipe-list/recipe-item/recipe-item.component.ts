@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
 import { Recipe } from '../../recipe.model';
-import { RecipeService } from '../../recipe.service';
 
 @Component
 (
@@ -11,8 +9,8 @@ import { RecipeService } from '../../recipe.service';
   }
 )
 export class RecipeItemComponent implements OnInit {
-  @Input('recipeItem') recipe: Recipe;
-  @Input('recipeIndex') index: number;
+  @Input() recipeItem: Recipe;
+  @Input() recipeIndex: number;
 
   constructor() { }
 

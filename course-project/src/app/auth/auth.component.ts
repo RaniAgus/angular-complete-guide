@@ -15,16 +15,14 @@ import { AuthService } from './auth.service';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit, OnDestroy {
-  isLoginMode: boolean = false;
-  isLoading: boolean = false;
+  isLoginMode = false;
+  isLoading = false;
 
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor
-    ( private authService: AuthService
-    , private router: Router
-    , private dialog: MatDialog
-    ) { }
+  constructor(private authService: AuthService,
+              private router: Router,
+              private dialog: MatDialog) {}
 
   ngOnInit(): void {
   }
@@ -34,22 +32,22 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  onSwitchMode() {
+  onSwitchMode(): void {
     this.isLoginMode = !this.isLoginMode;
   }
 
-  onSubmit(form: NgForm) {
-    if(!form.valid) {
+  onSubmit(form: NgForm): void {
+    if (!form.valid) {
       return;
     }
     this.isLoading = true;
 
     const email = form.value.email;
     const password = form.value.password;
-    
-    let authObs = this.isLoginMode 
+
+    const authObs = this.isLoginMode
       ? this.authService.login(email, password)
-      : this.authService.signup(email, password)
+      : this.authService.signup(email, password);
 
     authObs
       // finalize() ejecuta en éxito y en error, tap() no
@@ -67,10 +65,10 @@ export class AuthComponent implements OnInit, OnDestroy {
     form.reset();
   }
 
-  private showErrorDialog(errorMessage: string) {
-    let dialogRef = this.dialog.open(DialogComponent, {
+  private showErrorDialog(errorMessage: string): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
       data: errorMessage,
-    })
+    });
 
     dialogRef
       .afterClosed()
@@ -79,7 +77,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     ;
   }
 
-  // ======================= DYNAMIC COMPONENT WITH NGIF ======================= 
+  // ======================= DYNAMIC COMPONENT WITH NGIF =======================
 
   // error: string = null;
 
@@ -95,7 +93,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   // onErrorHandled() {
   //   this.error = null;
-  //}
+  // }
 
   // ==================== DYNAMIC COMPONENT PROGRAMATICALLY ====================
 

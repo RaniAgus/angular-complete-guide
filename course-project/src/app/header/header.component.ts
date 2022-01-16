@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
@@ -21,12 +21,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private authService: AuthService
     ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.authService.user$
       .pipe(takeUntil(this.destroy$))
       .subscribe((user: User) => {
         this.isAuthenticated = !!user;
-      })  
+      })
     ;
   }
 
@@ -35,15 +35,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  onSaveData() {
+  onSaveData(): void {
     this.dataStorageService.storeRecipes();
   }
 
-  onFetchData() {
+  onFetchData(): void {
     this.dataStorageService.fetchRecipes().subscribe();
   }
 
-  onLogout() {
+  onLogout(): void {
     this.authService.logout();
   }
 }

@@ -7,7 +7,7 @@
             <app-loading-spinner></app-loading-spinner>
         </div>
         <!--
-        <app-alert [message]="error" *ngIf="error" (close)="onErrorHandled()"></app-alert>
+        <app-alert [message]="error" *ngIf="error" (alertClose)="onErrorHandled()"></app-alert>
         -->
         <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
             <div class="form-group">

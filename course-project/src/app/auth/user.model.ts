@@ -1,15 +1,13 @@
 export class User {
-    constructor
-        ( public email:string
-        , public id:string
-        , private _token
-        , private _tokenExpirationDate: Date
-    ) {}
+    constructor(public email: string,
+                public id: string,
+                private tok: string,
+                private tokExpirationDate: Date) {}
 
-    get token() {
-        if(!this._tokenExpirationDate || new Date > this._tokenExpirationDate) {
+    get token(): string {
+        if (!this.tokExpirationDate || new Date() > this.tokExpirationDate) {
             return null;
         }
-        return this._token;
+        return this.tok;
     }
 }

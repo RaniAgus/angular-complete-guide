@@ -15,7 +15,7 @@ const url = 'https://recipes-app-31096-default-rtdb.firebaseio.com';
 export class DataStorageService {
 
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private recipeService: RecipeService
   ) { }
 
@@ -39,11 +39,11 @@ export class DataStorageService {
       ;
   }
 
-  private parseRecipe(recipe: Recipe) {
+  private parseRecipe(recipe: Recipe): Recipe {
     // La request original no devuelve el atributo 'ingredients' si está vacío
-    return { 
+    return {
       ...recipe
-      , ingredients: recipe.ingredients ? recipe.ingredients : [] 
+      , ingredients: recipe.ingredients ? recipe.ingredients : []
     };
   }
 }

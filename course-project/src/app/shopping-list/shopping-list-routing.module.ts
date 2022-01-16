@@ -1,6 +1,6 @@
-import { NgModule } from "@angular/core";
-import { RouterModule } from "@angular/router";
-import { ShoppingListComponent } from "./shopping-list.component";
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { ShoppingListComponent } from './shopping-list.component';
 
 const routes = [
   { path: '', component: ShoppingListComponent }
