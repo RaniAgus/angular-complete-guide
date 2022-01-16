@@ -29,15 +29,8 @@ import { RecipesComponent } from "./recipes.component";
   , RecipesRoutingModule
   ]
 , exports: 
-  [ RecipesComponent
-  , RecipeListComponent
-  , RecipeDetailComponent
-  , RecipeItemComponent
-  , RecipeEditComponent
-  , RecipeStartComponent
   // Exporto la directiva para que también funcione el dropdown del navbar
-  , DropdownDirective
-  ]
+  [ DropdownDirective ]
 })
 export class RecipesModule {
 
