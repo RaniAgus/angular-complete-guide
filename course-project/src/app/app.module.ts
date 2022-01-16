@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -21,6 +22,9 @@ import { CoreModule } from './core.module';
       // esto solo provee servicios (no directivas ni componentes), por lo que
       // va a estar disponible en toda la app
       , HttpClientModule
+      // no lo hubiera sacado ni en pedo si no fuera por este buen samaritano
+      // https://stackoverflow.com/a/48710009/14089741
+      , BrowserAnimationsModule
       ]
   , bootstrap: [AppComponent]
   }
