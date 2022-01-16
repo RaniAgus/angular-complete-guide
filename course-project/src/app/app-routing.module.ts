@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 const appRoutes: Routes =
   [ { path: '', redirectTo: '/recipes', pathMatch: 'full' }
@@ -17,8 +17,10 @@ const appRoutes: Routes =
   ]
 ;
 
+// Esta preloadingStrategy me permite que se precarguen todos los módulos detrás de la app
+// Con esto, obtenemos lo mejor de ambos mundos: una carga rápida y fluidez al navegar
 @NgModule
-( { imports: [RouterModule.forRoot(appRoutes)]
+( { imports: [RouterModule.forRoot(appRoutes, { preloadingStrategy: PreloadAllModules })]
   , exports: [RouterModule]
   }
 )
