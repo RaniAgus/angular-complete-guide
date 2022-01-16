@@ -7,8 +7,6 @@ import { MatStepperModule } from '@angular/material/stepper'
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
-import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component'
 import { NotFoundComponent } from './not-found/not-found.component';
 
 import { RecipeService } from './recipes/recipe.service';
@@ -20,14 +18,13 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { DialogComponent } from './shared/dialog/dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RecipesModule } from './recipes/recipes.module';
+import { ShoppingListModule } from './shopping-list/shopping-list.module';
 
 @NgModule
 (
   { declarations: 
       [ AppComponent
       , HeaderComponent
-      , ShoppingListComponent
-      , ShoppingEditComponent
       , NotFoundComponent
       , AuthComponent
       , LoadingSpinnerComponent
@@ -48,6 +45,7 @@ import { RecipesModule } from './recipes/recipes.module';
       , MatStepperModule
       , AppRoutingModule
       , RecipesModule
+      , ShoppingListModule
       ]
   , providers: 
       [ RecipeService
