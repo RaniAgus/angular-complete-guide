@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatStepperModule } from '@angular/material/stepper';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AlertComponent } from './alert/alert.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { DropdownDirective } from './dropdown.directive';
@@ -27,7 +26,6 @@ import { PlaceholderDirective } from './placeholder/placeholder.directive';
   , ReactiveFormsModule
     // las features de forms vienen de acá
   , MatDialogModule
-  , BrowserAnimationsModule
   , MatStepperModule
   ]
 , exports:
