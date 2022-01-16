@@ -5,8 +5,8 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
 import { User } from './user.model';
 
-const baseUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:';
-const API_KEY = 'key=AIzaSyDKNNp9Xpn92y9pATWeynlFxXxpqZDFkog';
+const baseUrl = 'https://identitytoolkit.googleapis.com/v1';
+const API_KEY = 'jaja abrazo capo';
 
 const NETWORK_ERROR_MESSAGE = 'A network error occurred.';
 
@@ -40,7 +40,7 @@ export class AuthService {
   signup(email: string, password: string) {
     return this.http
       .post<AuthResponseData>
-        ( `${baseUrl}signUp?${API_KEY}`
+        ( `${baseUrl}/accounts:signUp?key=${API_KEY}`
         , { email: email, password: password, returnSecureToken: true }
         )
       .pipe
@@ -53,7 +53,7 @@ export class AuthService {
   login(email: string, password: string) {
     return this.http
       .post<AuthResponseData>
-      ( `${baseUrl}signInWithPassword?${API_KEY}`
+      ( `${baseUrl}/accounts:signInWithPassword?key=${API_KEY}`
         , { email: email, password: password, returnSecureToken: true }
         )
       .pipe
@@ -102,7 +102,7 @@ export class AuthService {
   }
 
   autoLogout(expiresIn: number) {
-    console.log(expiresIn);
+    console.log({ expiresIn });
     this.tokenExpirationTimer = setTimeout(() => this.logout(), expiresIn);
   }
 

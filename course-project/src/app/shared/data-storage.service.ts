@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { RecipeService } from '../recipes/recipe.service';
 import { Recipe } from '../recipes/recipe.model';
@@ -7,7 +7,7 @@ import { Recipe } from '../recipes/recipe.model';
 import { map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-const url = 'https://ng-complete-guide-1baa5-default-rtdb.firebaseio.com/';
+const url = 'https://recipes-app-31096-default-rtdb.firebaseio.com';
 
 @Injectable({
   providedIn: 'root'
@@ -22,15 +22,18 @@ export class DataStorageService {
   storeRecipes(): void {
     const recipes = this.recipeService.getRecipes();
     this.http
-      .put(url + 'recipes.json', recipes)
-      .subscribe( response => console.log(response) )
+      .put(`${url}/recipes.json`, recipes)
+      .subscribe(
+        response => console.log('recipes stored: ', response),
+        error => console.log('error storing recipes: ', error)
+      )
     ;
   }
 
   fetchRecipes(): Observable<Recipe[]> {
-    return this.http.get<Recipe[]>(`${url}recipes.json?`)
+    return this.http.get<Recipe[]>(`${url}/recipes.json`)
       .pipe
-        ( map( recipes => recipes.map(this.parseRecipe) )
+        ( map( recipes => recipes ? recipes.map(this.parseRecipe) : [] )
         , tap( recipes => this.recipeService.setRecipes(recipes) )
         )
       ;
