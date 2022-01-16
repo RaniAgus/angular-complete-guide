@@ -3,11 +3,10 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { User } from './user.model';
 
 const baseUrl = 'https://identitytoolkit.googleapis.com/v1';
-const API_KEY = 'jaja abrazo capo';
-
 const NETWORK_ERROR_MESSAGE = 'A network error occurred.';
 
 const ERROR_MESSAGES = {
@@ -40,7 +39,7 @@ export class AuthService {
   signup(email: string, password: string): Observable<AuthResponseData> {
     return this.http
       .post<AuthResponseData>
-        ( `${baseUrl}/accounts:signUp?key=${API_KEY}`
+        ( `${baseUrl}/accounts:signUp?key=${environment.FIREBASE_API_KEY}`
         , { email, password, returnSecureToken: true }
         )
       .pipe
@@ -53,7 +52,7 @@ export class AuthService {
   login(email: string, password: string): Observable<AuthResponseData> {
     return this.http
       .post<AuthResponseData>
-      ( `${baseUrl}/accounts:signInWithPassword?key=${API_KEY}`
+      ( `${baseUrl}/accounts:signInWithPassword?key=${environment.FIREBASE_API_KEY}`
         , { email, password, returnSecureToken: true }
         )
       .pipe
