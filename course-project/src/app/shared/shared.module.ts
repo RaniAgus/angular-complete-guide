@@ -9,35 +9,34 @@ import { DropdownDirective } from './dropdown.directive';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { PlaceholderDirective } from './placeholder/placeholder.directive';
 
-@NgModule(
-{
-  declarations:
-  [ AlertComponent
-  , DialogComponent
-  , LoadingSpinnerComponent
-  , PlaceholderDirective
-  , DropdownDirective
-  ]
-, imports:
-  [ CommonModule
+@NgModule({
+  declarations: [
+    AlertComponent,
+    DialogComponent,
+    LoadingSpinnerComponent,
+    PlaceholderDirective,
+    DropdownDirective,
+  ],
+  imports: [
+    CommonModule,
     // ngIf y ngFor vienen de acá también (BrowserModule hace otras cosas de
     // inicialización, no queremos importarlo)
-  , FormsModule
-  , ReactiveFormsModule
+    FormsModule,
+    ReactiveFormsModule,
     // las features de forms vienen de acá
-  , MatDialogModule
-  , MatStepperModule
-  ]
-, exports:
-  [ CommonModule
-  , FormsModule
-  , ReactiveFormsModule
-  , AlertComponent
-  , DialogComponent
-  , LoadingSpinnerComponent
-  , PlaceholderDirective
-  , DropdownDirective
-  ]
-, entryComponents: [DialogComponent]
+    MatDialogModule,
+    MatStepperModule,
+  ],
+  exports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AlertComponent,
+    DialogComponent,
+    LoadingSpinnerComponent,
+    PlaceholderDirective,
+    DropdownDirective,
+  ],
+  entryComponents: [DialogComponent],
 })
 export class SharedModule {}

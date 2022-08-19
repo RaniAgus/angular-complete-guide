@@ -4,13 +4,14 @@ import { Ingredient } from '../shared/ingredient.model';
 
 @Injectable({ providedIn: 'root' })
 export class ShoppingListService {
-  private ingredients: Ingredient[] =
-    [ new Ingredient('Apples', 5)
-    , new Ingredient('Tomatoes', 10)
-    ]
-  ;
+  private ingredients: Ingredient[] = [
+    new Ingredient('Apples', 5),
+    new Ingredient('Tomatoes', 10),
+  ];
 
-  private ingredientsModified: Subject<Ingredient[]> = new Subject<Ingredient[]>();
+  private ingredientsModified: Subject<Ingredient[]> = new Subject<
+    Ingredient[]
+  >();
   private editStarted: Subject<number> = new Subject<number>();
 
   getIngredients(): Ingredient[] {

@@ -1,7 +1,13 @@
-import { Directive, ElementRef, HostBinding, HostListener, OnInit } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  OnInit,
+} from '@angular/core';
 
 @Directive({
-  selector: '[appDropdown]'
+  selector: '[appDropdown]',
 })
 export class DropdownDirective implements OnInit {
   @HostBinding('class.open')

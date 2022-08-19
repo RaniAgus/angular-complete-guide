@@ -5,13 +5,11 @@ import { AuthService } from '../auth/auth.service';
 import { User } from '../auth/user.model';
 import { DataStorageService } from '../shared/data-storage.service';
 
-@Component
-(
-  { selector: 'app-header'
-  , templateUrl: './header.component.html'
-  , styleUrls: ['header.component.css']
-  }
-)
+@Component({
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['header.component.css'],
+})
 export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   private destroy$: Subject<boolean> = new Subject();
@@ -19,15 +17,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private dataStorageService: DataStorageService,
     private authService: AuthService
-    ) {}
+  ) {}
 
   ngOnInit(): void {
     this.authService.user$
       .pipe(takeUntil(this.destroy$))
       .subscribe((user: User) => {
         this.isAuthenticated = !!user;
-      })
-    ;
+      });
   }
 
   ngOnDestroy(): void {

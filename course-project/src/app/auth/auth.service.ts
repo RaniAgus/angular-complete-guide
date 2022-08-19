@@ -12,7 +12,7 @@ const NETWORK_ERROR_MESSAGE = 'A network error occurred.';
 const ERROR_MESSAGES = {
   EMAIL_EXISTS: 'This email already exists.',
   EMAIL_NOT_FOUND: 'Wrong email or password.',
-  INVALID_PASSWORD: 'Wrong email or password.'
+  INVALID_PASSWORD: 'Wrong email or password.',
 };
 
 const DEFAULT_ERROR_MESSAGE = 'An unknown error occurred.';
@@ -28,7 +28,7 @@ interface AuthResponseData {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   user$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
@@ -38,47 +38,43 @@ export class AuthService {
 
   signup(email: string, password: string): Observable<AuthResponseData> {
     return this.http
-      .post<AuthResponseData>
-        ( `${baseUrl}/accounts:signUp?key=${environment.FIREBASE_API_KEY}`
-        , { email, password, returnSecureToken: true }
-        )
-      .pipe
-        ( catchError(this.handleError)
-        , tap(this.handleAuthentication.bind(this))
-        )
-    ;
+      .post<AuthResponseData>(
+        `${baseUrl}/accounts:signUp?key=${environment.FIREBASE_API_KEY}`,
+        { email, password, returnSecureToken: true }
+      )
+      .pipe(
+        catchError(this.handleError),
+        tap(this.handleAuthentication.bind(this))
+      );
   }
 
   login(email: string, password: string): Observable<AuthResponseData> {
     return this.http
-      .post<AuthResponseData>
-      ( `${baseUrl}/accounts:signInWithPassword?key=${environment.FIREBASE_API_KEY}`
-        , { email, password, returnSecureToken: true }
-        )
-      .pipe
-        ( catchError(this.handleError)
-        , tap(this.handleAuthentication.bind(this))
-        )
-    ;
+      .post<AuthResponseData>(
+        `${baseUrl}/accounts:signInWithPassword?key=${environment.FIREBASE_API_KEY}`,
+        { email, password, returnSecureToken: true }
+      )
+      .pipe(
+        catchError(this.handleError),
+        tap(this.handleAuthentication.bind(this))
+      );
   }
 
   autoLogin(): void {
-    const userData:
-    { email: string
-    ; id: string
-    ; _token: string
-    ; _tokenExpirationDate: string
+    const userData: {
+      email: string;
+      id: string;
+      _token: string;
+      _tokenExpirationDate: string;
     } = JSON.parse(localStorage.getItem('userData'));
 
     if (userData) {
-      const loadedUser = new User
-        ( userData.email
-        , userData.id
-        , userData._token
-        , new Date(userData._tokenExpirationDate)
-        )
-      ;
-
+      const loadedUser = new User(
+        userData.email,
+        userData.id,
+        userData._token,
+        new Date(userData._tokenExpirationDate)
+      );
       if (loadedUser.token) {
         this.user$.next(loadedUser);
         const expiresIn =
@@ -112,13 +108,12 @@ export class AuthService {
   private handleAuthentication(response: AuthResponseData): void {
     // expiresIn es un string que contiene el tiempo de expiración en
     // segundos, lo pasamos a milisegundos
-    const user = new User
-      ( response.email
-      , response.localId
-      , response.idToken
-      , new Date( new Date().getTime() + +response.expiresIn * 1000 )
-      )
-    ;
+    const user = new User(
+      response.email,
+      response.localId,
+      response.idToken,
+      new Date(new Date().getTime() + +response.expiresIn * 1000)
+    );
     this.user$.next(user);
 
     // Después de cargar el usuario, emite un timer que te desloguea cuando
@@ -131,9 +126,9 @@ export class AuthService {
 
   private handleError(errorRes: HttpErrorResponse): Observable<never> {
     return throwError(
-      !errorRes.error || !errorRes.error.error ? NETWORK_ERROR_MESSAGE :
-      ERROR_MESSAGES[errorRes.error.error.message] || DEFAULT_ERROR_MESSAGE
+      !errorRes.error || !errorRes.error.error
+        ? NETWORK_ERROR_MESSAGE
+        : ERROR_MESSAGES[errorRes.error.error.message] || DEFAULT_ERROR_MESSAGE
     );
   }
-
 }

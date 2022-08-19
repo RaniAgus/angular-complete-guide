@@ -8,17 +8,15 @@ import { RecipeStartComponent } from './recipe-start/recipe-start.component';
 import { RecipesRoutingModule } from './recipes-routing.module';
 import { RecipesComponent } from './recipes.component';
 
-@NgModule(
-{ declarations:
-  [ RecipesComponent
-  , RecipeListComponent
-  , RecipeDetailComponent
-  , RecipeItemComponent
-  , RecipeEditComponent
-  , RecipeStartComponent
-  ]
-, imports: [ SharedModule, RecipesRoutingModule ]
+@NgModule({
+  declarations: [
+    RecipesComponent,
+    RecipeListComponent,
+    RecipeDetailComponent,
+    RecipeItemComponent,
+    RecipeEditComponent,
+    RecipeStartComponent,
+  ],
+  imports: [SharedModule, RecipesRoutingModule],
 })
-export class RecipesModule {
-
-}
+export class RecipesModule {}

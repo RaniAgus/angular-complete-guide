@@ -12,7 +12,7 @@ import { AuthService } from './auth.service';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  styleUrls: ['./auth.component.css'],
 })
 export class AuthComponent implements OnInit, OnDestroy {
   isLoginMode = false;
@@ -20,12 +20,13 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private authService: AuthService,
-              private router: Router,
-              private dialog: MatDialog) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private dialog: MatDialog
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
@@ -51,16 +52,15 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     authObs
       // finalize() ejecuta en éxito y en error, tap() no
-      .pipe(finalize(() => this.isLoading = false))
-      .subscribe
-        ( responseData => {
-            this.router.navigate(['/recipes']);
-          }
-        , error => {
-            this.showErrorDialog(error);
-          }
-        )
-    ;
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe(
+        (responseData) => {
+          this.router.navigate(['/recipes']);
+        },
+        (error) => {
+          this.showErrorDialog(error);
+        }
+      );
 
     form.reset();
   }
@@ -70,11 +70,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       data: errorMessage,
     });
 
-    dialogRef
-      .afterClosed()
-      .pipe(take(1), takeUntil(this.destroy$))
-      .subscribe()
-    ;
+    dialogRef.afterClosed().pipe(take(1), takeUntil(this.destroy$)).subscribe();
   }
 
   // ======================= DYNAMIC COMPONENT WITH NGIF =======================
