@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 import { AccountsService } from '../accounts.service';
 
@@ -10,10 +10,12 @@ import { AccountsService } from '../accounts.service';
 })
 export class NewAccountComponent {
   constructor(private accountsService: AccountsService) {
-    this.accountsService.statusUpdated.subscribe((status: string) => alert('new status: ' + status))
+    this.accountsService.statusUpdated.subscribe((status: string) =>
+      alert('new status: ' + status)
+    );
   }
 
-  onCreateAccount(accountName: string, accountStatus: string) {
+  onCreateAccount(accountName: string, accountStatus: string): void {
     this.accountsService.addAccount(accountName, accountStatus);
     // this.loggingService.logStatusChange(accountStatus); // No hace falta, quedó en el otro servicio
   }

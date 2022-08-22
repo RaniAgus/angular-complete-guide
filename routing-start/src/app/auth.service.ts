@@ -2,7 +2,9 @@ export class AuthService {
   loggedIn = false;
 
   async isAuthenticated(): Promise<boolean> {
-    return new Promise(resolve => setTimeout(() => resolve(this.loggedIn), 800));
+    return new Promise((resolve) =>
+      setTimeout(() => resolve(this.loggedIn), 800)
+    );
   }
 
   login() {

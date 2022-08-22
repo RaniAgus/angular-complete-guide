@@ -10,27 +10,27 @@ import { PostsService } from './posts.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   loadedPosts = [];
-  isFetching: boolean = false;
+  isFetching = false;
   error = null;
   errorSub: Subscription;
 
   constructor(private postsService: PostsService) {} // Se inyecta la dependencia
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.errorSub = this.postsService.error.subscribe(errorMessage => this.error = errorMessage);
     this.onFetchPosts();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.errorSub.unsubscribe();
   }
 
-  onCreatePost(postData: Post) {
+  onCreatePost(postData: Post): void {
     // Send Http request
     this.postsService.createAndStorePost(postData);
   }
 
-  onFetchPosts() {
+  onFetchPosts(): void {
     // Send Http request
     this.isFetching = true;
     this.postsService.fetchPosts().subscribe
@@ -40,9 +40,9 @@ export class AppComponent implements OnInit, OnDestroy {
     ;
   }
 
-  onClearPosts() {
+  onClearPosts(): void {
     // Send Http request
     this.postsService.clearPosts().subscribe(() => this.onFetchPosts());
   }
-  
+
 }

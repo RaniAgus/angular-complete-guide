@@ -15,7 +15,7 @@ export class AccountComponent {
   // Así le avisamos a Angular que nos inyecte una instancia de este servicio
   constructor(private accountsService: AccountsService) { }
 
-  onSetTo(status: string) {
+  onSetTo(status: string): void {
     this.accountsService.updateStatus(this.id, status);
     // this.loggingService.logStatusChange(status); // No hace falta, quedó en el otro servicio
     this.accountsService.statusUpdated.emit(status);

@@ -12,7 +12,7 @@ export class AppComponent implements OnInit{
 
   constructor(private accountsService: AccountsService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.accounts = this.accountsService.accounts;
   }
 }

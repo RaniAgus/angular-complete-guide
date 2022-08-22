@@ -4,40 +4,41 @@ import { Component, ViewEncapsulation } from '@angular/core';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  encapsulation: ViewEncapsulation.None // Normalmente no se hace esto, afecta otros componentes
+  encapsulation: ViewEncapsulation.None, // Normalmente no se hace esto, afecta otros componentes
   // Otras opciones: ShadowDom (usa esa tecnología), Emulated (comportamiento default)
 })
 export class AppComponent {
-  serverElements = 
-    [
-      { type: 'server'
-      , name: 'Test server'
-      , content: 'Just a test!'
-      }
-    ]
-    ;
+  serverElements = [
+    { type: 'server', name: 'Test server', content: 'Just a test!' },
+  ];
 
-  onServerAdded(serverData: {newServerName: string, newServerContent: string}) {
+  onServerAdded(serverData: {
+    newServerName: string;
+    newServerContent: string;
+  }): void {
     this.serverElements.push({
       type: 'server',
       name: serverData.newServerName,
-      content: serverData.newServerContent
+      content: serverData.newServerContent,
     });
   }
 
-  onBlueprintAdded(blueprintData: {newServerName: string, newServerContent: string}) {
+  onBlueprintAdded(blueprintData: {
+    newServerName: string;
+    newServerContent: string;
+  }): void {
     this.serverElements.push({
       type: 'blueprint',
       name: blueprintData.newServerName,
-      content: blueprintData.newServerContent
+      content: blueprintData.newServerContent,
     });
-  }  
+  }
 
-  onChangeFirst() {
+  onChangeFirst(): void {
     this.serverElements[0].name = 'Changed!'; // Se puede cambiar desde varios sitios
   }
 
-  onDestroyFirst() {
+  onDestroyFirst(): void {
     this.serverElements.splice(0, 1);
   }
 }

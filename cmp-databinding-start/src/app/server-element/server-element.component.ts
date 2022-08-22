@@ -1,35 +1,39 @@
-import { Component
-       , OnInit
-       , Input
-       , OnChanges
-       , SimpleChanges
-       , DoCheck
-       , AfterContentInit
-       , AfterContentChecked
-       , AfterViewInit
-       , AfterViewChecked
-       , OnDestroy
-       , ViewChild
-       , ElementRef
-       , ContentChild
-       } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  DoCheck,
+  AfterContentInit,
+  AfterContentChecked,
+  AfterViewInit,
+  AfterViewChecked,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+  ContentChild,
+} from '@angular/core';
 
+// tslint:disable-next-line:no-conflicting-lifecycle
 @Component({
   selector: 'app-server-element',
   templateUrl: './server-element.component.html',
-  styleUrls: ['./server-element.component.css']
-})
-export class ServerElementComponent implements OnInit // Es una buena práctica incluir la interfaz si la estás implementando
-                                             , OnChanges
-                                             , DoCheck
-                                             , AfterContentInit
-                                             , AfterContentChecked
-                                             , AfterViewInit
-                                             , AfterViewChecked
-                                             , OnDestroy
+  styleUrls: ['./server-element.component.css'],
+}) // Es una buena práctica incluir la interfaz si la estás implementando
+export class ServerElementComponent
+  implements
+    OnInit,
+    OnChanges,
+    DoCheck,
+    AfterContentInit,
+    AfterContentChecked,
+    AfterViewInit,
+    AfterViewChecked,
+    OnDestroy
 {
-  @Input('srvElement') // Para definirlo como alias para esta propiedad desde fuera
-  element: {type: string, name: string, content: string};
+  @Input()
+  srvElement: { type: string; name: string; content: string };
 
   @Input()
   name: string;
@@ -47,37 +51,41 @@ export class ServerElementComponent implements OnInit // Es una buena práctica 
   ngOnInit(): void {
     console.log('ngOnInit called!');
     console.log(`Text content: ${this.header.nativeElement.textContent}`); // Acá 'testserver' no aparece
-    console.log(`Text content of paragraph: ${this.paragraph.nativeElement.textContent}`); // 'Just a test!' tampoco aparece
+    console.log(
+      `Text content of paragraph: ${this.paragraph.nativeElement.textContent}`
+    ); // 'Just a test!' tampoco aparece
   }
 
-  ngOnChanges(changes: SimpleChanges):void {
+  ngOnChanges(changes: SimpleChanges): void {
     console.log('ngOnChanges called!');
     console.log(changes);
   }
 
-  ngDoCheck() {
+  ngDoCheck(): void {
     console.log('doCheck called!'); // No es un problema siempre y cuando el código que se ejecuta es chiquito
   }
 
-  ngAfterContentInit() {
+  ngAfterContentInit(): void {
     console.log('ngAfterContentInit called!'); // Después de onInit y de doCheck, solo una vez
-    console.log(`Text content of paragraph: ${this.paragraph.nativeElement.textContent}`); // Acá sí se renderizó 'Just a test!'
+    console.log(
+      `Text content of paragraph: ${this.paragraph.nativeElement.textContent}`
+    ); // Acá sí se renderizó 'Just a test!'
   }
 
-  ngAfterContentChecked() {
+  ngAfterContentChecked(): void {
     console.log('ngAfterContentChecked called!'); // Siempre después de doCheck
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     console.log('ngAfterViewInit called!'); // Después de ContentInit
     console.log(`Text content: ${this.header.nativeElement.textContent}`); // Acá sí se renderizó 'testserver'
   }
 
-  ngAfterViewChecked() {
+  ngAfterViewChecked(): void {
     console.log('ngAfterViewChecked called!'); // Después de ContentCheck
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     console.log('ngOnDestroy was called!');
   }
 }

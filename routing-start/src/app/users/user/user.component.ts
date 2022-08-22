@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user',
@@ -17,17 +16,17 @@ export class UserComponent implements OnInit, OnDestroy {
     this.user = {
       id: this.route.snapshot.params['id'],
       name: this.route.snapshot.params['name']
-    }
+    };
 
     // Agrego esto para escuchar cambios en los params de la ruta en caso de que
     // haya un link que me mande al mismo componente
-    // this.paramsSubscription = 
+    // this.paramsSubscription =
     this.route.params.subscribe(
       (params: Params) => {
         this.user = {
           id: params['id'],
           name: params['name']
-        }
+        };
       }
     );
   }

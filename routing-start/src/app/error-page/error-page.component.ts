@@ -14,7 +14,7 @@ export class ErrorPageComponent implements OnInit {
   ngOnInit(): void {
     // Este campo "data" se lo pasamos a través de las routes
     this.errorMessage = this.route.snapshot.data['message'];
-    this.route.data.subscribe(data => { this.errorMessage = data['message'] });
+    this.route.data.subscribe(data => { this.errorMessage = data['message']; });
   }
 
 }
